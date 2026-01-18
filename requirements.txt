@@ -1,0 +1,19 @@
+langchain>=0.3.0
+langgraph>=0.2.0
+langchain-openai
+langchain-community
+pandas
+sqlalchemy
+psycopg2-binary
+pgvector  # NEW: For vector search
+tavily-python
+streamlit
+loguru
+python-dotenv
+fastapi
+uvicorn
+pydantic
+openai
+tiktoken  # Required for OpenAI embeddings
+plotly    # NEW: For the dashboard charts
+requests

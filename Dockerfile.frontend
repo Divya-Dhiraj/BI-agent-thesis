@@ -1,0 +1,22 @@
+# Use a lightweight Python image
+FROM python:3.11-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy requirements (good for caching, even if we don't install all of them)
+COPY requirements.txt .
+
+# Install dependencies
+# We manually list them here to keep the frontend lightweight
+# (Installing the full requirements.txt would require heavy system drivers for the DB)
+RUN pip install --no-cache-dir streamlit pandas requests plotly
+
+# Copy the source code
+COPY src/ ./src/
+
+# Expose the port Streamlit will run on
+EXPOSE 9090
+
+# Run Streamlit when the container starts
+CMD ["streamlit", "run", "src/dashboard.py", "--server.port", "9090", "--server.address", "0.0.0.0"]

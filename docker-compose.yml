@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: agentic_thesis_postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: thesisdb
+    ports:
+      - "5433:5432"
+
+  agent_app:
+    build: .
+    container_name: agentic_thesis_app
+    ports:
+      - "9010:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  # NEW: The Streamlit Dashboard
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "9090:9090"
+    depends_on:
+      - agent_app
+    environment:
+      - AGENT_API_URL=http://agent_app:8000  # Internal Docker network URL
