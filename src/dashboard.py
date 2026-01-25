@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+import plotly.express as px
 import io
 import os
 import uuid
@@ -19,22 +20,28 @@ if "messages" not in st.session_state:
 with st.sidebar:
     st.title("🗂️ Session History")
     st.caption(f"ID: {st.session_state.session_id}")
+    use_external_prices = st.toggle(
+        "Use external prices (Tavily)",
+        value=True,
+        help="When off, price questions use only internal database data."
+    )
     if st.button("Clear Memory"):
         st.session_state.messages = []
         st.session_state.session_id = str(uuid.uuid4())
         st.rerun()
 
 # --- HELPER: SAFE CHART DRAWING ---
-def safe_bar_chart(chart_json):
-    """Draws a chart only if data is valid, otherwise shows error text."""
+def render_chart(chart_json):
+    """Render chart by type (bar, line, pie, scatter)."""
     try:
         if not chart_json or "data" not in chart_json:
             return
-            
+
+        chart_type = (chart_json.get("type") or "bar").lower()
         labels = chart_json["data"].get("labels", [])
         values = chart_json["data"].get("values", [])
-        
-        # FIX: Ensure arrays are same length
+
+        # Ensure arrays are same length
         min_len = min(len(labels), len(values))
         if min_len == 0:
             st.warning("Chart data is empty.")
@@ -44,13 +51,23 @@ def safe_bar_chart(chart_json):
             "Label": labels[:min_len],
             "Value": values[:min_len]
         })
-        
-        # Dynamic Title
+
         if "title" in chart_json:
             st.caption(chart_json["title"])
-            
-        st.bar_chart(df.set_index("Label"))
-        
+
+        if chart_type == "line":
+            fig = px.line(df, x="Label", y="Value", markers=True)
+            st.plotly_chart(fig, use_container_width=True)
+        elif chart_type == "pie":
+            fig = px.pie(df, names="Label", values="Value")
+            st.plotly_chart(fig, use_container_width=True)
+        elif chart_type == "scatter":
+            fig = px.scatter(df, x="Label", y="Value")
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            fig = px.bar(df, x="Label", y="Value")
+            st.plotly_chart(fig, use_container_width=True)
+
     except Exception as e:
         st.warning(f"Could not render chart: {e}")
 
@@ -65,7 +82,7 @@ for message in st.session_state.messages:
             art = message["artifacts"]
             
             # 1. Chart
-            safe_bar_chart(art.get("chart_data"))
+            render_chart(art.get("chart_data"))
             
             # 2. Technical Details (Always Valid)
             with st.expander("🛠️ View SQL & Data"):
@@ -87,7 +104,11 @@ if prompt := st.chat_input("Ask a question..."):
                 # REQUEST TO API
                 response = requests.post(
                     f"{AGENT_API_URL}/ask", 
-                    json={"prompt": prompt, "session_id": st.session_state.session_id},
+                    json={
+                        "prompt": prompt,
+                        "session_id": st.session_state.session_id,
+                        "use_external_prices": use_external_prices
+                    },
                     timeout=300  # <--- INCREASED TIMEOUT TO 5 MINS
                 )
                 
@@ -97,7 +118,7 @@ if prompt := st.chat_input("Ask a question..."):
                     st.markdown(answer)
                     
                     # 1. VISUALIZATION
-                    safe_bar_chart(data.get("chart_data"))
+                    render_chart(data.get("chart_data"))
 
                     # 2. VALIDATION LAYER (Always Show)
                     st.divider()

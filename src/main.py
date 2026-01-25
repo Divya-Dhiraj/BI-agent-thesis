@@ -12,6 +12,7 @@ agent = BusinessAnalystAgent()
 class QueryRequest(BaseModel):
     prompt: str
     session_id: str = "default"
+    use_external_prices: bool = True
 
 # --- THE CRITICAL SCHEMA ---
 class QueryResponse(BaseModel):
@@ -32,11 +33,16 @@ async def ask_question(request: QueryRequest):
     logger.info(f"Received Query: {request.prompt}")
     try:
         # Call the agent
-        result = agent.ask(request.prompt, thread_id=request.session_id)
+        result = agent.ask(
+            request.prompt,
+            thread_id=request.session_id,
+            use_external_prices=request.use_external_prices
+        )
         
         # DEBUG LOG: Check if SQL exists before sending
-        sql_status = "PRESENT" if result.get("sql_query") else "MISSING"
-        logger.info(f"Response Prepared | SQL: {sql_status}")
+        # Note: SQL will be None for price comparison queries (expected behavior)
+        sql_status = "PRESENT" if result.get("sql_query") else "MISSING (expected for price comparison)"
+        logger.info(f"Response Prepared | SQL: {sql_status} | Chart: {'PRESENT' if result.get('chart_data') else 'MISSING'}")
         
         return QueryResponse(
             answer=result.get("answer", "Processing error."),
