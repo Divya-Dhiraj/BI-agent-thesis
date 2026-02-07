@@ -18,6 +18,8 @@ services:
       - .:/app
     env_file:
       - .env
+    environment:
+      - DB_HOST=   # unset so container uses DATABASE_URL (postgres:5432)
     depends_on:
       - postgres
 

@@ -42,8 +42,10 @@ def run_smart_ingestion():
 
     # 1. LOAD DATA
     try:
-        ship_df = pd.read_csv("data/shipped_data.tsv", sep='\t', on_bad_lines='skip', low_memory=False)
-        conc_df = pd.read_csv("data/concession_data.tsv", sep='\t', on_bad_lines='skip', low_memory=False)
+        # Added encoding='latin1' to both calls
+        ship_df = pd.read_csv("data/shipped_data.tsv", sep='\t', on_bad_lines='skip', low_memory=False, encoding='latin1')
+        conc_df = pd.read_csv("data/concession_data.tsv", sep='\t', on_bad_lines='skip', low_memory=False, encoding='latin1')
+        
         ship_df = clean_column_names(ship_df)
         conc_df = clean_column_names(conc_df)
     except Exception as e:

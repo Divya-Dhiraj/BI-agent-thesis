@@ -1,0 +1,138 @@
+[
+  {
+    "question": "What are total sales?",
+    "category": "simple_aggregation",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "sum(product_gms)",
+      "expected_columns": ["product_gms"]
+    }
+  },
+  {
+    "question": "Show me total sales by month",
+    "category": "trend_analysis",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "group by",
+      "expected_columns": ["month", "year", "product_gms"]
+    }
+  },
+  {
+    "question": "What is the return rate?",
+    "category": "calculated_metric",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw", "concession_raw"],
+      "expected_sql_pattern": "conceded_units",
+      "expected_join": true,
+      "expected_calculation": "return_rate"
+    }
+  },
+  {
+    "question": "Which products have the highest return rates?",
+    "category": "product_ranking",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw", "concession_raw"],
+      "expected_sql_pattern": "order by",
+      "expected_join": true
+    }
+  },
+  {
+    "question": "What is the net margin?",
+    "category": "financial_metric",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw", "concession_raw"],
+      "expected_sql_pattern": "ncrc",
+      "expected_join": true,
+      "expected_calculation": "net_margin"
+    }
+  },
+  {
+    "question": "Show me sales for iPhone",
+    "category": "product_specific",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "asin",
+      "expected_filter": "iPhone"
+    }
+  },
+  {
+    "question": "Which products have safety issues?",
+    "category": "flag_interpretation",
+    "ground_truth": {
+      "expected_tables": ["concession_raw"],
+      "expected_sql_pattern": "is_andon_cord",
+      "expected_filter": "Y"
+    }
+  },
+  {
+    "question": "What are the top 10 best-selling products?",
+    "category": "ranking",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "order by",
+      "expected_limit": 10
+    }
+  },
+  {
+    "question": "Compare sales between Apple and Samsung",
+    "category": "comparative",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "brand_name",
+      "expected_filter": ["Apple", "Samsung"]
+    }
+  },
+  {
+    "question": "What is the total cost of goods sold?",
+    "category": "financial_metric",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "shipped_cogs",
+      "expected_columns": ["shipped_cogs"]
+    }
+  },
+  {
+    "question": "Show me products with high return rates and low margins",
+    "category": "complex_multi_criteria",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw", "concession_raw"],
+      "expected_join": true,
+      "expected_sql_pattern": "where"
+    }
+  },
+  {
+    "question": "What are the main reasons for returns?",
+    "category": "root_cause_analysis",
+    "ground_truth": {
+      "expected_tables": ["concession_raw"],
+      "expected_sql_pattern": "root_cause",
+      "expected_columns": ["root_cause", "defect_category"]
+    }
+  },
+  {
+    "question": "How many units were shipped last month?",
+    "category": "time_filtered",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_sql_pattern": "shipped_units",
+      "expected_time_filter": true
+    }
+  },
+  {
+    "question": "What is the average selling price?",
+    "category": "calculated_metric",
+    "ground_truth": {
+      "expected_tables": ["shipped_raw"],
+      "expected_calculation": "avg(product_gms / shipped_units)"
+    }
+  },
+  {
+    "question": "Which brands have the highest NCRC?",
+    "category": "brand_analysis",
+    "ground_truth": {
+      "expected_tables": ["concession_raw"],
+      "expected_sql_pattern": "brand_name",
+      "expected_columns": ["ncrc", "brand_name"]
+    }
+  }
+]

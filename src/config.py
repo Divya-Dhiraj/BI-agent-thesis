@@ -11,8 +11,17 @@ class Config:
     
     # 1. Database & Infrastructure
     DEBUG = os.getenv("DEBUG_MODE", "True") == "True"
-    # Fallback to ensure we never hit the default 'postgres' DB by accident
-    DB_URL = os.getenv("DATABASE_URL", "postgresql://user:password@postgres:5432/thesisdb")
+    # When DB_HOST is set (e.g. localhost), use it so ingestion works when run on host.
+    # Otherwise use DATABASE_URL (e.g. postgres:5432 inside Docker).
+    _db_host = os.getenv("DB_HOST")
+    if _db_host:
+        _db_port = os.getenv("DB_PORT", "5433")
+        _user = os.getenv("POSTGRES_USER", "user")
+        _password = os.getenv("POSTGRES_PASSWORD", "password")
+        _db = os.getenv("POSTGRES_DB", "thesisdb")
+        DB_URL = f"postgresql://{_user}:{_password}@{_db_host}:{_db_port}/{_db}"
+    else:
+        DB_URL = os.getenv("DATABASE_URL", "postgresql://user:password@postgres:5432/thesisdb")
     
     # 2. AI Intelligence Layer
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
