@@ -1,0 +1,1 @@
+SELECT COUNT(DISTINCT asin) AS product_count FROM shipped_raw WHERE item_name ILIKE '%iphone%';

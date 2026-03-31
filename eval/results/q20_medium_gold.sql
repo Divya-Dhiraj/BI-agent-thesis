@@ -1,0 +1,1 @@
+SELECT fulfillment_channel, SUM(shipped_cogs) AS total_cogs FROM shipped_raw WHERE fulfillment_channel IS NOT NULL GROUP BY fulfillment_channel ORDER BY total_cogs DESC;

@@ -1,0 +1,1 @@
+SELECT SUM(product_gms) AS total_sales FROM shipped_raw WHERE item_name ILIKE '%iphone%';

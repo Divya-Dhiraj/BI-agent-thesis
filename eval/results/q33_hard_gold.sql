@@ -1,0 +1,1 @@
+SELECT DISTINCT asin, item_name, brand_name FROM concession_raw WHERE is_andon_cord = 'Y';

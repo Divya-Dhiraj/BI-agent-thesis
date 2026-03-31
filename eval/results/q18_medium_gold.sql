@@ -1,0 +1,1 @@
+SELECT year, month, SUM(product_gms) AS total_sales FROM shipped_raw GROUP BY year, month ORDER BY year, month;

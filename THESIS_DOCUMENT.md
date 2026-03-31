@@ -22,7 +22,7 @@ BI Agent for Conversational Analytics
 
 ## 1. Abstract
 
-Business users often lack the technical skills to query databases directly, yet they need timely, accurate answers from organizational data. This thesis presents an agent-based system that bridges natural language and structured data by (1) interpreting user questions in the context of a domain-specific sales and returns database, (2) resolving product or brand scope via hybrid (keyword and vector) search, (3) generating executable SQL that adheres to business rules and schema, (4) executing queries with retry on failure, and (5) producing narrative answers and visualizations suitable for decision-making. The system is evaluated on SQL syntax and execution success, execution accuracy against gold SQL where available, end-to-end success rate, latency, and per-category performance. Results show that a pipeline combining product lookup, structured domain knowledge, and a state-graph agent can achieve robust Text-to-SQL and answer generation for a real-world business intelligence setting, and highlight which question types remain challenging. The work contributes a concrete architecture, an evaluation framework, and a discussion of design choices (product lookup, domain knowledge, retries) for conversational BI agents.
+Business users often lack the technical skills to query databases directly, yet they need timely, accurate answers from organizational data. This thesis presents an agent-based system that bridges natural language and structured data by (1) interpreting user questions in the context of a domain-specific sales and returns database, (2) resolving product or brand scope via hybrid (keyword and vector) search, (3) generating executable SQL that adheres to business rules and schema, (4) executing queries with retry on failure, and (5) producing narrative answers and visualizations suitable for decision-making. The system is designed to support evaluation on SQL syntax and execution success, execution accuracy against gold SQL where available, end-to-end success rate, latency, and per-category performance. The work contributes a concrete architecture and a discussion of design choices (product lookup, domain knowledge, retries) for conversational BI agents; evaluation will be implemented separately.
 
 **Keywords:** Text-to-SQL, natural language interface to databases, business intelligence agent, conversational analytics, LLM, product lookup, execution accuracy, domain knowledge.
 
@@ -44,7 +44,7 @@ Challenges include: schema and domain complexity (e.g., correct joins between sa
 
 - **Design** an agent-based pipeline that integrates product lookup, SQL generation, execution, and reporting.
 - **Implement** the pipeline using a state-graph (LangGraph) agent, a PostgreSQL database with vector and full-text search, and a domain knowledge module.
-- **Evaluate** the system on syntax correctness, execution success, execution accuracy (vs. gold SQL), end-to-end success, latency, and per-question-category performance.
+- **Evaluate** the system (evaluation to be implemented) on syntax correctness, execution success, execution accuracy (vs. gold SQL), end-to-end success, latency, and per-question-category performance.
 - **Identify** which question types succeed or fail and how design choices (lookup, domain knowledge, retries) affect outcomes.
 
 ### 2.4 Contributions
@@ -52,8 +52,8 @@ Challenges include: schema and domain complexity (e.g., correct joins between sa
 1. **System architecture:** A multi-phase agent (lookup → architect → executor → reporter) with conditional retry and explicit domain knowledge injection.
 2. **Product lookup:** Integration of keyword (full-text) search for product resolution before SQL generation, with optional extension to hybrid vector + keyword.
 3. **Domain knowledge module:** A structured knowledge base (schema, join rules, metric definitions, business flags) used in the SQL-generation prompt to improve semantic correctness.
-4. **Evaluation framework:** Automated evaluation of SQL syntax, execution success, execution accuracy (EX), answer presence, latency, and category-level breakdown, with support for ground-truth SQL and expected patterns.
-5. **Empirical analysis:** Baseline results and error analysis on a curated test set spanning simple aggregation, trend analysis, calculated metrics, product-specific, and complex multi-criteria questions.
+4. **Evaluation (to be implemented):** Planned evaluation of SQL syntax, execution success, execution accuracy (EX), answer presence, latency, and category-level breakdown.
+5. **Empirical analysis (planned):** Baseline results and error analysis on a curated test set once evaluation is in place.
 
 ### 2.5 Thesis Structure
 
@@ -61,7 +61,7 @@ Challenges include: schema and domain complexity (e.g., correct joins between sa
 - **Section 4** provides background on natural language interfaces to databases and the domain.
 - **Section 5** describes the system design and methodology.
 - **Section 6** details the implementation (stack, data model, API, evaluation).
-- **Section 7** presents the evaluation setup, metrics, and research questions.
+- **Section 7** will present the evaluation setup, metrics, and research questions (to be added).
 - **Section 8** concludes and outlines future work.
 - **Section 9** lists references; **Section 10** gives appendices (schema, sample queries).
 
@@ -79,7 +79,7 @@ Challenges include: schema and domain complexity (e.g., correct joins between sa
 
 ### 3.3 Evaluation of Text-to-SQL and Answer Quality
 
-Standard Text-to-SQL evaluation uses (1) syntax validity, (2) execution success, and (3) execution accuracy (comparison of result sets to gold SQL). Answer quality is harder to automate; options include semantic similarity to a reference answer, fact extraction and overlap, and **LLM-as-judge** scoring. This thesis uses syntax checks (PostgreSQL EXPLAIN), execution success, EX when gold SQL is available, and answer presence/latency; extension to semantic similarity or LLM-as-judge is supported by the evaluation framework.
+Standard Text-to-SQL evaluation uses (1) syntax validity, (2) execution success, and (3) execution accuracy (comparison of result sets to gold SQL). Answer quality is harder to automate; options include semantic similarity to a reference answer, fact extraction and overlap, and **LLM-as-judge** scoring. Planned evaluation for this thesis includes syntax checks (PostgreSQL EXPLAIN), execution success, EX when gold SQL is available, and answer presence/latency; extension to semantic similarity or LLM-as-judge can be added later.
 
 ---
 
@@ -169,55 +169,18 @@ Ingestion: TSV files (shipped_data.tsv, concession_data.tsv) are cleaned, normal
 
 ### 6.3 API and Agent Interface
 
-- **BusinessAnalystAgent.ask(question, thread_id):** Invokes the compiled graph with initial state `{ messages: [HumanMessage(question)] }` and returns a dictionary with answer, chart_data, sql_query, raw_data. The agent does not currently expose target_asins in the return; the API can be extended to include considered_products for evaluation.
-- **Evaluation:** The evaluator (BIAgentEvaluator) calls agent.ask for each test question, then runs SQL syntax check (EXPLAIN), execution, optional EX vs. gold_sql, and records answer presence, latency, and category. Results are aggregated into summary, performance, by_category, errors, and detailed_results.
-
-### 6.4 Evaluation Implementation
-
-- **Syntax:** PostgreSQL EXPLAIN on generated SQL; valid/invalid and error message.
-- **Execution:** Execute SQL; record success, row_count, execution_time, empty_result.
-- **Execution accuracy (EX):** When ground_truth.gold_sql is provided, run both model SQL and gold SQL; compare result DataFrames (sorted columns, sorted rows); report execution_accuracy (exact match), row_count_match.
-- **Ground-truth checks:** expected_tables (all must appear in SQL), expected_sql_pattern (substring in normalized SQL).
-- **Category breakdown:** Each test case can have a category (e.g., simple_aggregation, trend_analysis, calculated_metric); aggregate success rate, syntax accuracy, execution success, answer generation rate, and average latency per category.
-- **Output:** evaluation_results.json (summary, performance, by_category, errors, detailed_results) and console summary.
+- **BusinessAnalystAgent.ask(question, thread_id):** Invokes the compiled graph with initial state `{ messages: [HumanMessage(question)] }` and returns a dictionary with answer, chart_data, sql_query, raw_data. The agent does not currently expose target_asins in the return; the API can be extended to include considered_products for future evaluation.
 
 ---
 
 ## 7. Evaluation
 
-### 7.1 Research Questions
+Evaluation is not yet implemented. When added, it will cover:
 
-1. **RQ1 (Performance by category):** How well does the agent perform across question categories (simple aggregation, trend analysis, calculated metrics, product-specific, ranking, comparative, complex multi-criteria, flag interpretation, etc.), and which categories are hardest?
-2. **RQ2 (Execution accuracy):** How does execution accuracy (EX) compare to exact match (EM) when gold SQL is available, and what failure modes (syntax, wrong tables/joins, filters) explain the gap?
-3. **RQ3 (End-to-end success):** Does the pipeline achieve a usable end-to-end success rate (valid SQL, executed, non-empty correct answer), and where does it fail most (lookup, SQL generation, execution, reporting)?
-4. **RQ4 (Design choices):** How much do product lookup and domain knowledge contribute to SQL correctness and answer relevance? (Ablations: disable lookup; reduce or remove domain knowledge.)
-5. **RQ5 (Stability):** How stable are success and correctness when the same question is run multiple times (e.g., temperature=0)?
-
-### 7.2 Metrics
-
-| Metric | Description | Target (example) |
-|--------|-------------|-------------------|
-| SQL syntax accuracy | Fraction of generated queries that pass EXPLAIN | &gt; 95% |
-| SQL execution success rate | Fraction of queries that run without runtime error | &gt; 90% |
-| Execution accuracy (EX) | Fraction where result set matches gold SQL (when provided) | &gt; 80% |
-| End-to-end success rate | Syntax valid ∧ execution success ∧ non-empty answer | &gt; 85% |
-| Answer generation rate | Non-empty narrative returned | High |
-| Average latency | Time from question to response (seconds) | &lt; 10 s |
-| Per-category success rate | Success rate by question category | Identify weak categories |
-
-### 7.3 Experimental Setup
-
-- **Test set:** A curated set of natural language questions with optional category and ground_truth (expected_tables, expected_sql_pattern, gold_sql where available). Example file: data/test_queries.json (e.g., 15 questions spanning simple_aggregation, trend_analysis, calculated_metric, product_specific, ranking, comparative, complex_multi_criteria, root_cause_analysis, time_filtered, brand_analysis, flag_interpretation).
-- **Environment:** Database populated via ingestion; same model and temperature across runs for reproducibility.
-- **Run:** `python -m src.evaluation` (or with custom test file path); results saved to evaluation_results.json.
-
-### 7.4 Results and Discussion (Placeholder)
-
-- **Summary:** Report total_queries, success_rate, sql_syntax_accuracy, sql_execution_success_rate, answer_generation_rate, execution_accuracy_ex (and n), average_latency.
-- **By category:** For each category, report success_rate and average_latency; identify categories with low success (e.g., complex joins, calculated metrics).
-- **Error analysis:** Inspect errors list (question, sql_error, syntax_error); categorize failure modes (syntax, wrong table/column, join logic, filter, timeout).
-- **Ablations (if run):** Compare full system vs. no product filter vs. reduced domain knowledge on a subset of questions.
-- **Limitations:** Single domain, single LLM, English only; gold SQL and expected answers require manual curation.
+- **Research questions:** Performance by question category, execution accuracy (EX) vs. gold SQL, end-to-end success rate, effect of design choices (lookup, domain knowledge), and stability across runs.
+- **Metrics:** SQL syntax accuracy (EXPLAIN), execution success rate, execution accuracy (EX) when gold SQL is available, end-to-end success, answer generation rate, latency, per-category breakdown.
+- **Setup:** A test set of natural language questions with optional category and ground truth (expected_tables, expected_sql_pattern, gold_sql); run over the same database and model for reproducibility.
+- **Results:** To be reported once the evaluation framework is in place.
 
 ---
 
@@ -225,7 +188,7 @@ Ingestion: TSV files (shipped_data.tsv, concession_data.tsv) are cleaned, normal
 
 ### 8.1 Summary
 
-This thesis presented an agent-based natural language interface for business intelligence that combines (1) product lookup via full-text search, (2) domain-informed SQL generation, (3) execution with retry, and (4) narrative and chart reporting. The system is implemented with LangGraph, PostgreSQL (with vector and full-text search), and a structured domain knowledge module. An evaluation framework supports syntax, execution, execution accuracy (EX), and per-category analysis. The work demonstrates that a modular, knowledge-grounded pipeline can address real-world Text-to-SQL and answer generation for a specific BI domain, and provides a basis for measuring and improving performance.
+This thesis presented an agent-based natural language interface for business intelligence that combines (1) product lookup via full-text search, (2) domain-informed SQL generation, (3) execution with retry, and (4) narrative and chart reporting. The system is implemented with LangGraph, PostgreSQL (with vector and full-text search), and a structured domain knowledge module. Evaluation is to be implemented and will support syntax, execution, execution accuracy (EX), and per-category analysis. The work demonstrates that a modular, knowledge-grounded pipeline can address real-world Text-to-SQL and answer generation for a specific BI domain.
 
 ### 8.2 Future Work
 
@@ -296,10 +259,7 @@ This thesis presented an agent-based natural language interface for business int
 | Database models | src/database.py – ProductCatalog, ShippedRaw, ConcessionRaw, DatabaseManager |
 | Config | src/config.py – Config (DB_URL, OPENAI_*, TAVILY_*) |
 | Ingestion | src/ingestion.py – run_smart_ingestion (catalog + transactions) |
-| Evaluation | src/evaluation.py – BIAgentEvaluator, run_benchmark, aggregate_results |
 | API | src/main.py – FastAPI /ask endpoint |
-| Test set | data/test_queries.json |
-| Evaluation docs | EVALUATION.md, BEST_EVALUATION_METHODS.md |
 | Run instructions | RUN.md |
 
 ---

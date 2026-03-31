@@ -1,0 +1,1 @@
+SELECT SUM(shipped_units) AS total_shipped_units FROM shipped_raw WHERE brand_name ILIKE '%Samsung%' OR item_name ILIKE '%Samsung%';

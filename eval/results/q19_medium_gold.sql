@@ -1,0 +1,1 @@
+SELECT fulfillment_channel, SUM(product_gms) AS total_sales, SUM(shipped_units) AS total_units FROM shipped_raw WHERE fulfillment_channel IS NOT NULL GROUP BY fulfillment_channel ORDER BY total_sales DESC;

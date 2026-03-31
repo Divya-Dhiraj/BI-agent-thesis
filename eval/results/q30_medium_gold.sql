@@ -1,0 +1,1 @@
+SELECT brand_name, SUM(shipped_cogs) AS total_cogs FROM shipped_raw WHERE year = 2024 AND brand_name IS NOT NULL GROUP BY brand_name ORDER BY total_cogs DESC NULLS LAST LIMIT 5;

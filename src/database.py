@@ -1,4 +1,5 @@
 import os
+import platform
 import sys
 from sqlalchemy import create_engine, Column, Integer, String, Float, Text, BigInteger, Index
 from sqlalchemy.orm import declarative_base, sessionmaker, Session, mapped_column
@@ -9,6 +10,37 @@ from loguru import logger
 from src.config import Config
 
 Base = declarative_base()
+
+
+def _sqlalchemy_db_url() -> str:
+    """
+    macOS + Rosetta: native libpq (psycopg2) often aborts. Use pg8000 (pure Python) when available.
+    Linux/Docker: default psycopg2. Override: USE_PSYCOPG2_ONLY=1 or USE_PG8000_DB=1.
+    """
+    url = Config.DB_URL
+    if os.getenv("USE_PSYCOPG2_ONLY", "").lower() in ("1", "true", "yes"):
+        return url
+    want_pg8000 = os.getenv("USE_PG8000_DB", "").lower() in ("1", "true", "yes")
+    if not want_pg8000 and platform.system() != "Darwin":
+        return url
+    try:
+        import pg8000  # noqa: F401
+    except ImportError:
+        if platform.system() == "Darwin":
+            logger.warning(
+                "macOS: install pg8000 to avoid libpq/Rosetta crashes: pip install pg8000"
+            )
+        elif want_pg8000:
+            logger.error("USE_PG8000_DB set but pg8000 not installed")
+        return url
+    if url.startswith("postgresql://"):
+        u = "postgresql+pg8000://" + url.split("://", 1)[1]
+        if platform.system() == "Darwin":
+            logger.info("Using pg8000 for PostgreSQL (avoids libpq on Mac)")
+        return u
+    if url.startswith("postgresql+psycopg2://"):
+        return "postgresql+pg8000://" + url.split("://", 1)[1]
+    return url
 
 class ProductCatalog(Base):
     __tablename__ = 'product_catalog'
@@ -105,7 +137,7 @@ class ConcessionRaw(Base):
 class DatabaseManager:
     def __init__(self):
         try:
-            self.engine = create_engine(Config.DB_URL)
+            self.engine = create_engine(_sqlalchemy_db_url())
             self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
         except Exception as e:
             logger.error(f"DB Init Failed: {e}")

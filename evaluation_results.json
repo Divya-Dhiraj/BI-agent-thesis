@@ -1,498 +1,154 @@
 {
   "summary": {
-    "total_queries": 15,
-    "success_rate": 0.0,
-    "sql_syntax_accuracy": 0.0,
-    "sql_execution_success_rate": 0.0,
-    "answer_generation_rate": 1.0
+    "total_queries": 4,
+    "success_rate": 1.0,
+    "sql_syntax_accuracy": 1.0,
+    "sql_execution_success_rate": 1.0,
+    "answer_generation_rate": 1.0,
+    "execution_accuracy_ex": null,
+    "execution_accuracy_n": 0
   },
   "performance": {
-    "average_latency": 12.854062906901042,
-    "min_latency": 6.760694980621338,
-    "max_latency": 32.32600712776184,
-    "average_execution_time": 0.002145115534464518
+    "average_latency": 10.400976598262787,
+    "min_latency": 5.317841291427612,
+    "max_latency": 16.552562952041626,
+    "average_execution_time": 0.7965310215950012
   },
-  "errors": [
-    {
-      "question": "What are total sales?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Show me total sales by month",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "What is the return rate?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Which products have the highest return rates?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "What is the net margin?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Show me sales for iPhone",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Which products have safety issues?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "What are the top 10 best-selling products?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Compare sales between Apple and Samsung",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "What is the total cost of goods sold?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Show me products with high return rates and low margins",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "What are the main reasons for returns?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "How many units were shipped last month?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "What is the average selling price?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-    },
-    {
-      "question": "Which brands have the highest NCRC?",
-      "sql_error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-      "syntax_error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+  "by_category": {
+    "unknown": {
+      "total": 4,
+      "success": 4,
+      "sql_valid": 4,
+      "sql_executed": 4,
+      "has_answer": 4,
+      "success_rate": 1.0,
+      "sql_syntax_accuracy": 1.0,
+      "sql_execution_success_rate": 1.0,
+      "answer_generation_rate": 1.0,
+      "average_latency": 10.400976598262787
     }
-  ],
+  },
+  "errors": [],
   "detailed_results": [
     {
       "question": "What are total sales?",
-      "success": false,
-      "total_latency": 11.160894870758057,
+      "category": null,
+      "success": true,
+      "total_latency": 5.317841291427612,
       "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+        "valid": true,
+        "error": null
       },
       "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0022399425506591797
+        "success": true,
+        "error": null,
+        "row_count": 1,
+        "execution_time": 0.05173802375793457,
+        "empty_result": false
       },
       "answer_quality": {
         "has_answer": true,
-        "answer_length": 316,
+        "answer_length": 289,
         "has_chart": true,
-        "has_raw_data": false
+        "has_raw_data": true
       },
       "ground_truth_match": {
         "sql_pattern_match": true,
         "uses_expected_tables": true
       },
-      "sql_query": "SELECT\n  SUM(product_gms) AS total_sales_gms,\n  SUM(shipped_units) AS total_shipped_units\nFROM shipped_raw;",
-      "answer_preview": "Total sales cannot be determined from the provided evidence because no data was found. Without any transaction/revenue figures in the dataset, we cannot calculate or validate a total. The absence of d"
+      "execution_accuracy": {},
+      "sql_query": "SELECT\n  SUM(product_gms) AS total_sales\nFROM shipped_raw;",
+      "answer_preview": "Total sales are 1,991,772,556.02. This reflects the summed value of all recorded sales transactions in the dataset; the high total is driven by the aggregate volume and size of sales across all includ"
     },
     {
-      "question": "Show me total sales by month",
-      "success": false,
-      "total_latency": 10.876225709915161,
+      "question": "Show me sales trends over time",
+      "category": null,
+      "success": true,
+      "total_latency": 16.552562952041626,
       "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+        "valid": true,
+        "error": null
       },
       "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0019199848175048828
+        "success": true,
+        "error": null,
+        "row_count": 37,
+        "execution_time": 0.05339384078979492,
+        "empty_result": false
       },
       "answer_quality": {
         "has_answer": true,
-        "answer_length": 424,
+        "answer_length": 1604,
         "has_chart": true,
-        "has_raw_data": false
+        "has_raw_data": true
       },
       "ground_truth_match": {
         "sql_pattern_match": true,
         "uses_expected_tables": true
       },
-      "sql_query": "SELECT\n  s.year,\n  s.month,\n  SUM(s.product_gms) AS total_sales_gms,\n  SUM(s.shipped_units) AS total_shipped_units\nFROM shipped_raw s\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
-      "answer_preview": "Total sales by month cannot be shown because the provided data evidence contains no records (\"No data found\"). Without monthly sales transactions or aggregates, we cannot calculate totals, identify mo"
-    },
-    {
-      "question": "What is the return rate?",
-      "success": false,
-      "total_latency": 13.56376028060913,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0021009445190429688
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 496,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  s.year,\n  s.month,\n  (SUM(COALESCE(c.conceded_units, 0)) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
-      "answer_preview": "Return rate cannot be calculated from the provided evidence because no data was found. Without total units/orders shipped and total returns (or an equivalent numerator/denominator), we cannot quantify"
+      "execution_accuracy": {},
+      "sql_query": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms) AS product_gms,\n  SUM(s.shipped_cogs) AS shipped_cogs\nFROM shipped_raw s\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
+      "answer_preview": "Sales (Product GMS) show a clear seasonal pattern with a strong Q4 peak, a step-down in 2024 vs 2023, then a partial rebound in late 2024 and another Q4 peak in 2025 (but below 2023).\n\nWhat the data s"
     },
     {
       "question": "Which products have the highest return rates?",
-      "success": false,
-      "total_latency": 17.73663306236267,
+      "category": null,
+      "success": true,
+      "total_latency": 13.813902139663696,
       "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+        "valid": true,
+        "error": null
       },
       "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0019750595092773438
+        "success": true,
+        "error": null,
+        "row_count": 50,
+        "execution_time": 1.527771234512329,
+        "empty_result": false
       },
       "answer_quality": {
         "has_answer": true,
-        "answer_length": 312,
+        "answer_length": 1469,
         "has_chart": true,
-        "has_raw_data": false
+        "has_raw_data": true
       },
       "ground_truth_match": {
         "sql_pattern_match": true,
         "uses_expected_tables": true
       },
-      "sql_query": "WITH sales AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MAX(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nreturns AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.asin,\n  s.item_name,\n  s.shipped_units,\n  COALESCE(r.conceded_units, 0) AS conceded_units,\n  ROUND((COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0), 2) AS return_rate_pct\nFROM sales s\nLEFT JOIN returns r\n  ON r.asin = s.asin\nWHERE s.shipped_units > 0\nORDER BY return_rate_pct DESC, conceded_units DESC\nLIMIT 50;",
-      "answer_preview": "We cannot determine which products have the highest return rates because no return-rate data was found in the provided evidence. With no product-level returns and sales/shipments to calculate rates, w"
+      "execution_accuracy": {},
+      "sql_query": "WITH shipped AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MAX(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nreturns AS (\n  SELECT\n    CAST(c.asin AS TEXT) AS asin,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  JOIN shipped_raw s\n    ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n   AND c.mapped_year = s.year\n   AND c.mapped_month = s.month\n   AND c.mapped_week = s.week\n  GROUP BY 1\n)\nSELECT\n  sh.asin,\n  sh.item_name,\n  sh.shipped_units,\n  COALESCE(r.conceded_units, 0) AS conceded_units,\n  ROUND((COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(sh.shipped_units, 0), 2) AS return_rate_pct\nFROM shipped sh\nLEFT JOIN returns r\n  ON r.asin = sh.asin\nWHERE sh.shipped_units > 0\nORDER BY return_rate_pct DESC, conceded_units DESC, shipped_units DESC\nLIMIT 50;",
+      "answer_preview": "Products with the highest return rates (return_rate_pct) are:\n1) ASIN B0CGVVVDXW \u2014 Google Pixel 8 Pro \u2014 703.73% (53,828 conceded vs 7,649 shipped)\n2) ASIN B0BDK63RF3 \u2014 Google Pixel 7 (128GB Obsidian) "
     },
     {
       "question": "What is the net margin?",
-      "success": false,
-      "total_latency": 9.912073135375977,
+      "category": null,
+      "success": true,
+      "total_latency": 5.919600009918213,
       "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
+        "valid": true,
+        "error": null
       },
       "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0023550987243652344
+        "success": true,
+        "error": null,
+        "row_count": 1,
+        "execution_time": 1.5532209873199463,
+        "empty_result": false
       },
       "answer_quality": {
         "has_answer": true,
-        "answer_length": 310,
+        "answer_length": 190,
         "has_chart": true,
-        "has_raw_data": false
+        "has_raw_data": true
       },
       "ground_truth_match": {
         "sql_pattern_match": true,
         "uses_expected_tables": true
       },
-      "sql_query": "SELECT\n  COALESCE(SUM(s.product_gms), 0) - COALESCE(SUM(s.shipped_cogs), 0) - COALESCE(SUM(c.ncrc), 0) AS net_margin\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week;",
-      "answer_preview": "Net margin cannot be calculated from the provided evidence because no financial data (e.g., revenue and net income/profit, or a precomputed net margin) was found. As a result, there is no basis to qua"
-    },
-    {
-      "question": "Show me sales for iPhone",
-      "success": false,
-      "total_latency": 15.155164241790771,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0020051002502441406
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 369,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": false,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms) AS product_gms,\n  SUM(s.shipped_cogs) AS shipped_cogs\nFROM shipped_raw s\nWHERE LOWER(s.item_name) LIKE '%iphone%'\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
-      "answer_preview": "There are no sales results available for iPhone in the provided data.\n\nWhy: The query for iPhone sales returns zero matching records (no rows found), so total sales cannot be calculated or trended. Th"
-    },
-    {
-      "question": "Which products have safety issues?",
-      "success": false,
-      "total_latency": 17.203058004379272,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0020821094512939453
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 342,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "WITH safety_concessions AS (\n  SELECT\n    CAST(c.asin AS TEXT) AS asin,\n    MAX(c.item_name) AS item_name,\n    MAX(c.brand_name) AS brand_name,\n    MAX(c.manufacturer_name) AS manufacturer_name,\n    SUM(c.conceded_units) AS safety_conceded_units,\n    SUM(c.ncrc) AS safety_ncrc,\n    COUNT(*) AS safety_concession_events,\n    MAX(CASE WHEN c.is_andon_cord = 'Y' THEN 1 ELSE 0 END) AS andon_cord_flag\n  FROM concession_raw c\n  WHERE c.marketplace_id = 4\n    AND c.is_andon_cord = 'Y'\n  GROUP BY CAST(c.asin AS TEXT)\n),\nsales_mapped AS (\n  SELECT\n    CAST(s.asin AS TEXT) AS asin,\n    SUM(s.shipped_units) AS shipped_units,\n    SUM(s.product_gms) AS product_gms,\n    SUM(s.shipped_cogs) AS shipped_cogs\n  FROM shipped_raw s\n  GROUP BY CAST(s.asin AS TEXT)\n)\nSELECT\n  sc.asin,\n  sc.item_name,\n  sc.brand_name,\n  sc.manufacturer_name,\n  sc.andon_cord_flag,\n  sc.safety_concession_events,\n  sc.safety_conceded_units,\n  sc.safety_ncrc,\n  COALESCE(sm.shipped_units, 0) AS shipped_units,\n  CASE\n    WHEN COALESCE(sm.shipped_units, 0) = 0 THEN NULL\n    ELSE (sc.safety_conceded_units * 100.0) / sm.shipped_units\n  END AS safety_return_rate_pct,\n  COALESCE(sm.product_gms, 0) AS product_gms,\n  COALESCE(sm.shipped_cogs, 0) AS shipped_cogs,\n  (COALESCE(sm.product_gms, 0) - COALESCE(sm.shipped_cogs, 0) - sc.safety_ncrc) AS net_margin_after_safety_returns\nFROM safety_concessions sc\nLEFT JOIN sales_mapped sm\n  ON sm.asin = sc.asin\nORDER BY sc.safety_ncrc DESC, sc.safety_conceded_units DESC, sc.safety_concession_events DESC;",
-      "answer_preview": "No products can be identified as having safety issues based on the provided evidence, because the dataset contains no records related to safety issues. With no safety-issue observations (e.g., inciden"
-    },
-    {
-      "question": "What are the top 10 best-selling products?",
-      "success": false,
-      "total_latency": 8.86794114112854,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.002409219741821289
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 311,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  s.asin,\n  MAX(s.item_name) AS item_name,\n  SUM(s.shipped_units) AS total_shipped_units,\n  SUM(s.product_gms) AS total_product_gms\nFROM shipped_raw s\nGROUP BY s.asin\nORDER BY total_shipped_units DESC, total_product_gms DESC\nLIMIT 10;",
-      "answer_preview": "No data found to identify the top 10 best-selling products. Because there are no product-level sales records available (e.g., units sold or revenue by product), we cannot rank products or determine wh"
-    },
-    {
-      "question": "Compare sales between Apple and Samsung",
-      "success": false,
-      "total_latency": 13.795444965362549,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0022242069244384766
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 457,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  s.year,\n  s.month,\n  s.brand_name,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms)   AS product_gms,\n  SUM(s.shipped_cogs)  AS shipped_cogs\nFROM shipped_raw s\nWHERE s.brand_name IN ('Apple', 'Samsung')\nGROUP BY\n  s.year,\n  s.month,\n  s.brand_name\nORDER BY\n  s.year,\n  s.month,\n  s.brand_name;",
-      "answer_preview": "No sales data was found for Apple or Samsung, so a direct comparison cannot be made from the provided evidence. Because the dataset contains no records/metrics for either brand, there are no values to"
-    },
-    {
-      "question": "What is the total cost of goods sold?",
-      "success": false,
-      "total_latency": 6.941618919372559,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0026149749755859375
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 355,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  SUM(shipped_cogs) AS total_cost_of_goods_sold\nFROM shipped_raw;",
-      "answer_preview": "Total cost of goods sold (COGS) cannot be determined because the provided data evidence contains no COGS records or values (\"No data found\"). As a result, there is no basis to calculate or attribute C"
-    },
-    {
-      "question": "Show me products with high return rates and low margins",
-      "success": false,
-      "total_latency": 32.32600712776184,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0019321441650390625
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 573,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "WITH sales AS (\n    SELECT\n        CAST(asin AS TEXT) AS asin,\n        MAX(item_name) AS item_name,\n        year,\n        month,\n        SUM(shipped_units) AS shipped_units,\n        SUM(product_gms) AS product_gms,\n        SUM(shipped_cogs) AS shipped_cogs\n    FROM shipped_raw\n    GROUP BY CAST(asin AS TEXT), year, month\n),\nreturns AS (\n    SELECT\n        CAST(asin AS TEXT) AS asin,\n        mapped_year AS year,\n        mapped_month AS month,\n        SUM(conceded_units) AS conceded_units,\n        SUM(ncrc) AS ncrc\n    FROM concession_raw\n    GROUP BY CAST(asin AS TEXT), mapped_year, mapped_month\n),\njoined AS (\n    SELECT\n        s.asin,\n        s.item_name,\n        s.year,\n        s.month,\n        s.shipped_units,\n        s.product_gms,\n        s.shipped_cogs,\n        COALESCE(r.conceded_units, 0) AS conceded_units,\n        COALESCE(r.ncrc, 0) AS ncrc,\n        (s.product_gms - s.shipped_cogs - COALESCE(r.ncrc, 0)) AS net_margin\n    FROM sales s\n    LEFT JOIN returns r\n      ON r.asin = s.asin\n     AND r.year = s.year\n     AND r.month = s.month\n),\nscored AS (\n    SELECT\n        j.*,\n        (j.conceded_units * 100.0) / NULLIF(j.shipped_units, 0) AS return_rate_pct,\n        j.net_margin / NULLIF(j.product_gms, 0) AS margin_rate\n    FROM joined j\n),\nthresholds AS (\n    SELECT\n        PERCENTILE_CONT(0.90) WITHIN GROUP (ORDER BY return_rate_pct) AS rr_p90,\n        PERCENTILE_CONT(0.10) WITHIN GROUP (ORDER BY net_margin) AS margin_p10\n    FROM scored\n    WHERE shipped_units > 0\n)\nSELECT\n    s.asin,\n    s.item_name,\n    s.year,\n    s.month,\n    s.shipped_units,\n    s.conceded_units,\n    ROUND(s.return_rate_pct::numeric, 2) AS return_rate_pct,\n    ROUND(s.product_gms::numeric, 2) AS product_gms,\n    ROUND(s.shipped_cogs::numeric, 2) AS shipped_cogs,\n    ROUND(s.ncrc::numeric, 2) AS ncrc,\n    ROUND(s.net_margin::numeric, 2) AS net_margin,\n    ROUND((s.margin_rate * 100.0)::numeric, 2) AS margin_rate_pct\nFROM scored s\nCROSS JOIN thresholds t\nWHERE s.shipped_units > 0\n  AND s.return_rate_pct >= t.rr_p90         -- \"high return rate\"\n  AND s.net_margin <= t.margin_p10          -- \"low margin\"\nORDER BY s.return_rate_pct DESC, s.net_margin ASC\nLIMIT 200;",
-      "answer_preview": "No products can be shown with high return rates and low margins because the dataset returned no records ('No data found'). As a result, we cannot identify any product-level return-rate or margin outli"
-    },
-    {
-      "question": "What are the main reasons for returns?",
-      "success": false,
-      "total_latency": 10.884505033493042,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0019350051879882812
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 539,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  c.defect_category,\n  c.root_cause,\n  SUM(c.conceded_units) AS returned_units,\n  SUM(c.ncrc) AS total_ncrc,\n  COUNT(*) AS concession_events\nFROM concession_raw c\nWHERE c.marketplace_id = 4\nGROUP BY\n  c.defect_category,\n  c.root_cause\nORDER BY\n  returned_units DESC,\n  total_ncrc DESC;",
-      "answer_preview": "No data found, so the main reasons for returns cannot be determined from the provided evidence. Without return-reason counts/percentages (or any return reason codes), we cannot identify which drivers "
-    },
-    {
-      "question": "How many units were shipped last month?",
-      "success": false,
-      "total_latency": 9.548663139343262,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.002338886260986328
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 270,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  SUM(shipped_units) AS shipped_units_last_month\nFROM shipped_raw\nWHERE (year, month) = (\n  EXTRACT(YEAR FROM (CURRENT_DATE - INTERVAL '1 month'))::int,\n  EXTRACT(MONTH FROM (CURRENT_DATE - INTERVAL '1 month'))::int\n);",
-      "answer_preview": "Units shipped last month: No data found (cannot be quantified).\n\nWhy: The available evidence contains no shipment records for last month, so the metric cannot be calculated; the result is driven by mi"
-    },
-    {
-      "question": "What is the average selling price?",
-      "success": false,
-      "total_latency": 8.078258991241455,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0018858909606933594
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 447,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  SUM(product_gms) / NULLIF(SUM(shipped_units), 0) AS average_selling_price\nFROM shipped_raw;",
-      "answer_preview": "Average selling price (ASP) cannot be calculated because no sales transaction data was found. ASP requires at minimum total revenue and total units sold (ASP = Total Sales $ / Total Units). With no re"
-    },
-    {
-      "question": "Which brands have the highest NCRC?",
-      "success": false,
-      "total_latency": 6.760694980621338,
-      "sql_syntax": {
-        "valid": false,
-        "error": "Unexpected error: (psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)"
-      },
-      "sql_execution": {
-        "success": false,
-        "error": "(psycopg2.OperationalError) could not translate host name \"postgres\" to address: nodename nor servname provided, or not known\n\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
-        "row_count": 0,
-        "execution_time": 0.0021581649780273438
-      },
-      "answer_quality": {
-        "has_answer": true,
-        "answer_length": 266,
-        "has_chart": true,
-        "has_raw_data": false
-      },
-      "ground_truth_match": {
-        "sql_pattern_match": true,
-        "uses_expected_tables": true
-      },
-      "sql_query": "SELECT\n  c.brand_name,\n  SUM(c.ncrc) AS total_ncrc\nFROM concession_raw c\nGROUP BY 1\nORDER BY total_ncrc DESC NULLS LAST;",
-      "answer_preview": "No brands can be identified as having the highest NCRC because the provided dataset contains no records (\"No data found\"). As a result, we cannot rank brands or determine drivers (e.g., defects, retur"
+      "execution_accuracy": {},
+      "sql_query": "SELECT\n  (COALESCE(SUM(s.product_gms), 0) - COALESCE(SUM(s.shipped_cogs), 0) - COALESCE(SUM(c.ncrc), 0)) AS net_margin\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week;",
+      "answer_preview": "Net margin is -62,530,016.96 (a net loss). This is negative because total costs and operating expenses exceeded total revenue for the period, resulting in an overall loss rather than profit."
     }
   ]
 }

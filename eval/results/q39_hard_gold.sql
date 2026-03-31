@@ -1,0 +1,1 @@
+SELECT is_hrr_asin, COUNT(DISTINCT asin) AS product_count, SUM(conceded_units) AS total_conceded FROM concession_raw WHERE is_hrr_asin IS NOT NULL GROUP BY is_hrr_asin;

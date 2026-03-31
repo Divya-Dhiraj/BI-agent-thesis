@@ -1,0 +1,1 @@
+SELECT DISTINCT asin, item_name, brand_name FROM shipped_raw ORDER BY asin;

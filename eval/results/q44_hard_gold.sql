@@ -1,0 +1,1 @@
+SELECT s.asin, s.item_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week GROUP BY s.asin, s.item_name HAVING SUM(s.shipped_units) > 0 ORDER BY SUM(c.conceded_units) ASC NULLS LAST LIMIT 1;

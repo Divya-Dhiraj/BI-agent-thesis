@@ -1,0 +1,1 @@
+SELECT COUNT(DISTINCT asin) AS returned_product_count FROM concession_raw;

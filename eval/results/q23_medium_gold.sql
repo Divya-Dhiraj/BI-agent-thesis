@@ -1,0 +1,1 @@
+SELECT defect_category, COUNT(conceded_units) AS return_count FROM concession_raw WHERE defect_category IS NOT NULL GROUP BY defect_category ORDER BY return_count DESC,defect_category ASC;

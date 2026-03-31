@@ -1,0 +1,1 @@
+SELECT mapped_year, mapped_month, SUM(conceded_units) AS conceded_units, SUM(ncrc) AS total_ncrc FROM concession_raw WHERE mapped_year IS NOT NULL AND mapped_month IS NOT NULL GROUP BY mapped_year, mapped_month ORDER BY mapped_year, mapped_month;

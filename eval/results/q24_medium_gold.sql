@@ -1,0 +1,1 @@
+SELECT recovery_channel, COUNT(*) AS item_count, SUM(conceded_units) AS total_units FROM concession_raw WHERE recovery_channel IS NOT NULL GROUP BY recovery_channel ORDER BY total_units DESC;

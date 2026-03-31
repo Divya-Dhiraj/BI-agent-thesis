@@ -1,0 +1,1 @@
+SELECT SUM(shipped_cogs) AS total_cogs FROM shipped_raw;

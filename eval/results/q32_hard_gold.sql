@@ -1,0 +1,1 @@
+SELECT asin, item_name, SUM(product_gms) AS total_revenue, SUM(shipped_units) AS units_sold FROM shipped_raw GROUP BY asin, item_name ORDER BY total_revenue DESC LIMIT 10;

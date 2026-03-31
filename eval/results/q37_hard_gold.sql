@@ -1,0 +1,1 @@
+SELECT return_window, SUM(conceded_units) AS total_units, SUM(ncrc) AS total_ncrc FROM concession_raw WHERE return_window IS NOT NULL GROUP BY return_window ORDER BY total_units DESC;

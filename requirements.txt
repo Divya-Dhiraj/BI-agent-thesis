@@ -3,8 +3,10 @@ langgraph>=0.2.0
 langchain-openai
 langchain-community
 pandas
+numpy
 sqlalchemy
 psycopg2-binary
+pg8000  # pure-Python Postgres; used on macOS to avoid libpq/Rosetta crashes
 pgvector  # NEW: For vector search
 tavily-python
 streamlit

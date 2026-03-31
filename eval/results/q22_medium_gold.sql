@@ -1,0 +1,1 @@
+SELECT root_cause, COUNT(*) AS return_count, SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE root_cause IS NOT NULL GROUP BY root_cause ORDER BY return_count DESC LIMIT 10;

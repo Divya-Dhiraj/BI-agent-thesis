@@ -1,0 +1,1 @@
+SELECT defect_category, root_cause, SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE defect_category IS NOT NULL AND root_cause IS NOT NULL GROUP BY defect_category, root_cause ORDER BY total_conceded_units DESC LIMIT 1;
