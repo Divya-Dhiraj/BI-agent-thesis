@@ -25,6 +25,6 @@ LEFT JOIN returns r
 WHERE s.shipped_units > 0
 ORDER BY
   COALESCE(r.conceded_units, 0) ASC,
-  return_rate_pct ASC,
+  ((COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0)) ASC,
   s.shipped_units DESC
 LIMIT 1;

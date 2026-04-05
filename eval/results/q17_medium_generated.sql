@@ -7,5 +7,5 @@ LEFT JOIN concession_raw c
  AND c.mapped_year = s.year
  AND c.mapped_month = s.month
  AND c.mapped_week = s.week
-WHERE s.year = 2025
+WHERE s.year = 2024
 GROUP BY s.year;

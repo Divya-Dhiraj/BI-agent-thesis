@@ -1,1 +1,1 @@
-SELECT asp_bucket, SUM(product_gms) AS total_sales, SUM(shipped_units) AS units FROM shipped_raw WHERE asp_bucket IS NOT NULL GROUP BY asp_bucket ORDER BY total_sales DESC;
+SELECT s.asp_bucket, SUM(s.product_gms) AS total_sales, SUM(s.shipped_units) AS shipped_units FROM shipped_raw s WHERE s.asp_bucket IS NOT NULL GROUP BY s.asp_bucket ORDER BY total_sales DESC;

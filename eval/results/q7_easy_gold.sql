@@ -1,1 +1,1 @@
-SELECT SUM(product_gms) AS total_sales FROM shipped_raw WHERE brand_name ILIKE '%Sony%' OR item_name ILIKE '%Sony%';
+SELECT SUM(product_gms) AS total_sales FROM shipped_raw WHERE brand_name ILIKE '%Sony%';

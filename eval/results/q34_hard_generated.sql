@@ -5,4 +5,4 @@ FROM concession_raw c
 GROUP BY
   c.brand_name
 ORDER BY
-  total_ncrc DESC NULLS LAST;
+  total_ncrc DESC;

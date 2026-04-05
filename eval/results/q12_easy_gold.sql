@@ -1,1 +1,1 @@
-SELECT DISTINCT asin, item_name, brand_name FROM shipped_raw ORDER BY asin;
+SELECT DISTINCT asin, item_name FROM shipped_raw union SELECT DISTINCT asin, item_name FROM concession_raw  ORDER BY asin,item_name;

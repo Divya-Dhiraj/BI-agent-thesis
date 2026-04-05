@@ -1,17 +1,14 @@
 SELECT
   CAST(c.asin AS TEXT) AS asin,
-  c.item_name,
-  MAX(c.is_andon_cord) AS is_andon_cord,
+  MAX(c.item_name) AS item_name,
+  MAX(c.brand_name) AS brand_name,
+  MAX(c.manufacturer_name) AS manufacturer_name,
+  COUNT(*) AS andon_events,
   SUM(c.conceded_units) AS conceded_units,
   SUM(c.ncrc) AS total_ncrc,
-  COUNT(*) AS concession_records,
-  MIN(c.year * 100 + c.month) AS first_concession_yyyymm,
-  MAX(c.year * 100 + c.month) AS last_concession_yyyymm
+  MIN(c.year * 100 + c.month) AS first_andon_yyyymm,
+  MAX(c.year * 100 + c.month) AS last_andon_yyyymm
 FROM concession_raw c
 WHERE c.is_andon_cord = 'Y'
-  AND c.item_name ILIKE '%andon cord%'
-GROUP BY
-  CAST(c.asin AS TEXT),
-  c.item_name
-ORDER BY
-  total_ncrc DESC;
+GROUP BY CAST(c.asin AS TEXT)
+ORDER BY total_ncrc DESC, andon_events DESC, conceded_units DESC;

@@ -9,9 +9,7 @@ LEFT JOIN concession_raw c
   ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)
  AND c.mapped_year = s.year
  AND c.mapped_month = s.month
- AND c.mapped_week = s.week
- AND c.item_name ILIKE '%iPhone%'
-WHERE s.item_name ILIKE '%iPhone%'
+WHERE s.item_name ILIKE '%iphone%'
 GROUP BY
   s.year,
   s.month

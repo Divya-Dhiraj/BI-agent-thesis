@@ -7,14 +7,14 @@
       "question": "What are total sales?",
       "complexity": "easy",
       "gold_sql": "SELECT SUM(product_gms) AS total_sales FROM shipped_raw;",
-      "generated_sql": "SELECT\n  SUM(product_gms) AS total_sales_gms,\n  SUM(shipped_units) AS total_shipped_units\nFROM shipped_raw;",
+      "generated_sql": "SELECT\n  SUM(product_gms) AS total_sales\nFROM shipped_raw;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 12.67
+      "latency_seconds": 7.28
     },
     {
       "id": "q2_easy",
@@ -28,7 +28,7 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.38
+      "latency_seconds": 4.34
     },
     {
       "id": "q3_easy",
@@ -42,35 +42,35 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.37
+      "latency_seconds": 5.74
     },
     {
       "id": "q4_easy",
       "question": "What are total sales for iPhone?",
       "complexity": "easy",
       "gold_sql": "SELECT SUM(product_gms) AS total_sales FROM shipped_raw WHERE item_name ILIKE '%iphone%';",
-      "generated_sql": "SELECT\n  SUM(s.product_gms) AS total_sales_gms,\n  SUM(s.shipped_units) AS total_shipped_units\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%iPhone%';",
+      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS total_shipped_units,\n  SUM(s.product_gms)   AS total_sales_gms\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%iPhone%'\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": true,
+      "match": false,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 6.31
+      "latency_seconds": 11.89
     },
     {
       "id": "q5_easy",
       "question": "How many units were shipped for Samsung?",
       "complexity": "easy",
       "gold_sql": "SELECT SUM(shipped_units) AS total_shipped_units FROM shipped_raw WHERE brand_name ILIKE '%Samsung%' OR item_name ILIKE '%Samsung%';",
-      "generated_sql": "SELECT\n  COALESCE(SUM(s.shipped_units), 0) AS shipped_units\nFROM shipped_raw s\nWHERE (s.brand_name ILIKE '%Samsung%' OR s.item_name ILIKE '%Samsung%');",
+      "generated_sql": "SELECT\n  SUM(s.shipped_units) AS shipped_units_samsung\nFROM shipped_raw s\nWHERE (s.brand_name ILIKE '%Samsung%' OR s.item_name ILIKE '%Samsung%');",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 4.99
+      "latency_seconds": 6.02
     },
     {
       "id": "q6_easy",
@@ -84,21 +84,21 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.44
+      "latency_seconds": 5.47
     },
     {
       "id": "q7_easy",
       "question": "What are total sales for Sony products?",
       "complexity": "easy",
-      "gold_sql": "SELECT SUM(product_gms) AS total_sales FROM shipped_raw WHERE brand_name ILIKE '%Sony%' OR item_name ILIKE '%Sony%';",
-      "generated_sql": "SELECT\n  SUM(s.product_gms) AS total_sales_gms,\n  SUM(s.shipped_units) AS total_shipped_units\nFROM shipped_raw s\nWHERE s.brand_name ILIKE '%Sony%';",
+      "gold_sql": "SELECT SUM(product_gms) AS total_sales FROM shipped_raw WHERE brand_name ILIKE '%Sony%';",
+      "generated_sql": "SELECT\n  SUM(s.product_gms) AS total_sales_gms\nFROM shipped_raw s\nWHERE s.brand_name ILIKE '%Sony%';",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 6.53
+      "latency_seconds": 4.43
     },
     {
       "id": "q8_easy",
@@ -108,95 +108,95 @@
       "generated_sql": "SELECT\n  SUM(shipped_cogs) AS total_cost_of_goods_sold\nFROM shipped_raw;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 5.24
+      "latency_seconds": 4.47
     },
     {
       "id": "q9_easy",
       "question": "How many units were returned in 2024?",
       "complexity": "easy",
-      "gold_sql": "SELECT SUM(conceded_units) AS total_returned_units FROM concession_raw WHERE mapped_year = 2024;",
+      "gold_sql": "SELECT SUM(conceded_units) AS total_returned_units FROM concession_raw WHERE year = 2024;",
       "generated_sql": "SELECT\n  SUM(conceded_units) AS returned_units_2024\nFROM concession_raw\nWHERE year = 2024;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 6.88
+      "latency_seconds": 4.44
     },
     {
       "id": "q10_easy",
       "question": "How many distinct iPhone ASINs were shipped?",
       "complexity": "easy",
       "gold_sql": "SELECT COUNT(DISTINCT asin) AS product_count FROM shipped_raw WHERE item_name ILIKE '%iphone%';",
-      "generated_sql": "SELECT\n  COUNT(DISTINCT CAST(s.asin AS TEXT)) AS distinct_iphone_asins_shipped\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%iPhone%';",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 6.08
-    },
-    {
-      "id": "q11_easy",
-      "question": "What are total returns in conceded units for Pixel products?",
-      "complexity": "easy",
-      "gold_sql": "SELECT SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE brand_name ILIKE '%Pixel%';",
-      "generated_sql": "SELECT\n  SUM(c.conceded_units) AS total_conceded_units\nFROM concession_raw c\nWHERE c.item_name ILIKE '%Pixel%';",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 6.42
-    },
-    {
-      "id": "q12_easy",
-      "question": "Give the distinct list of products.",
-      "complexity": "easy",
-      "gold_sql": "SELECT DISTINCT asin, item_name, brand_name FROM shipped_raw ORDER BY asin;",
-      "generated_sql": "SELECT DISTINCT\n  CAST(asin AS TEXT) AS asin,\n  item_name\nFROM shipped_raw\nWHERE asin IS NOT NULL;",
+      "generated_sql": "SELECT COUNT(DISTINCT CAST(s.asin AS TEXT)) AS distinct_iphone_asins_shipped\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%iPhone%'\n  AND COALESCE(s.shipped_units, 0) > 0;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 21.28
+      "latency_seconds": 5.47
+    },
+    {
+      "id": "q11_easy",
+      "question": "What are total returns in conceded units for Pixel products?",
+      "complexity": "easy",
+      "gold_sql": "SELECT SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE item_name ILIKE '%Pixel%';",
+      "generated_sql": "SELECT\n  SUM(c.conceded_units) AS total_conceded_units\nFROM concession_raw c\nWHERE c.item_name ILIKE '%Pixel%';",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 5.73
+    },
+    {
+      "id": "q12_easy",
+      "question": "Give the distinct list of products.",
+      "complexity": "easy",
+      "gold_sql": "SELECT DISTINCT asin, item_name FROM shipped_raw union SELECT DISTINCT asin, item_name FROM concession_raw  ORDER BY asin,item_name;",
+      "generated_sql": "SELECT DISTINCT\n  CAST(asin AS TEXT) AS asin,\n  item_name\nFROM shipped_raw\nWHERE asin IS NOT NULL;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": false,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 17.51
     },
     {
       "id": "q13_easy",
       "question": "Give the distinct list of defect categories for returns.",
       "complexity": "easy",
       "gold_sql": "SELECT DISTINCT defect_category FROM concession_raw WHERE defect_category IS NOT NULL ORDER BY defect_category;",
-      "generated_sql": "SELECT DISTINCT defect_category\nFROM concession_raw\nWHERE defect_category IS NOT NULL\nORDER BY defect_category;",
+      "generated_sql": "SELECT DISTINCT defect_category\nFROM concession_raw\nWHERE defect_category IS NOT NULL\n  AND TRIM(defect_category) <> ''\nORDER BY defect_category;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 11.41
+      "latency_seconds": 8.84
     },
     {
       "id": "q14_easy",
       "question": "How many distinct products (ASINs) have had returns?",
       "complexity": "easy",
-      "gold_sql": "SELECT COUNT(DISTINCT asin) AS returned_product_count FROM concession_raw;",
-      "generated_sql": "SELECT COUNT(DISTINCT CAST(asin AS TEXT)) AS distinct_asins_with_returns\nFROM concession_raw\nWHERE conceded_units > 0;",
+      "gold_sql": "SELECT COUNT(DISTINCT asin) AS returned_product_count FROM concession_raw WHERE conceded_units > 0;",
+      "generated_sql": "SELECT\n  COUNT(DISTINCT CAST(asin AS TEXT)) AS distinct_asins_with_returns\nFROM concession_raw\nWHERE COALESCE(conceded_units, 0) > 0;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 6.19
+      "latency_seconds": 5.97
     },
     {
       "id": "q15_easy",
@@ -210,13 +210,13 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 5.91
+      "latency_seconds": 4.59
     },
     {
       "id": "q16_medium",
       "question": "What is the total CIR% in 2025?",
       "complexity": "medium",
-      "gold_sql": "SELECT (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.year = 2025;",
+      "gold_sql": "SELECT ((SELECT SUM(conceded_units) FROM concession_raw WHERE mapped_year = 2025) * 100.0) / NULLIF((SELECT SUM(shipped_units) FROM shipped_raw WHERE year = 2025), 0) AS cir_pct_2025;",
       "generated_sql": "SELECT\n  (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS cir_pct_2025\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\nWHERE s.year = 2025;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
@@ -224,49 +224,49 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.46
+      "latency_seconds": 7.32
     },
     {
       "id": "q17_medium",
-      "question": "What is the return rate in 2025?",
+      "question": "What is the return rate in 2024?",
       "complexity": "medium",
-      "gold_sql": "SELECT (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.year = 2025;",
-      "generated_sql": "SELECT\n  s.year AS sales_year,\n  (SUM(COALESCE(c.conceded_units, 0)) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\nWHERE s.year = 2025\nGROUP BY s.year;",
+      "gold_sql": "SELECT ((SELECT SUM(conceded_units) FROM concession_raw WHERE mapped_year = 2024) * 100.0) / NULLIF((SELECT SUM(shipped_units) FROM shipped_raw WHERE year = 2024), 0) AS cir_pct_2024;",
+      "generated_sql": "SELECT\n  s.year AS sales_year,\n  (SUM(COALESCE(c.conceded_units, 0)) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\nWHERE s.year = 2024\nGROUP BY s.year;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": false,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 8.0
+      "latency_seconds": 6.29
     },
     {
       "id": "q18_medium",
       "question": "Show me total sales by month.",
       "complexity": "medium",
       "gold_sql": "SELECT year, month, SUM(product_gms) AS total_sales FROM shipped_raw GROUP BY year, month ORDER BY year, month;",
-      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS total_shipped_units,\n  SUM(s.product_gms)   AS total_sales_gms\nFROM shipped_raw s\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
+      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS total_shipped_units,\n  SUM(s.product_gms) AS total_sales_gms\nFROM shipped_raw s\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 17.61
+      "latency_seconds": 13.52
     },
     {
       "id": "q19_medium",
       "question": "Show me total sales and units by fulfillment channel.",
       "complexity": "medium",
       "gold_sql": "SELECT fulfillment_channel, SUM(product_gms) AS total_sales, SUM(shipped_units) AS total_units FROM shipped_raw WHERE fulfillment_channel IS NOT NULL GROUP BY fulfillment_channel ORDER BY total_sales DESC;",
-      "generated_sql": "SELECT\n  fulfillment_channel,\n  SUM(product_gms) AS total_sales,\n  SUM(shipped_units) AS total_units\nFROM shipped_raw\nGROUP BY fulfillment_channel\nORDER BY total_sales DESC;",
+      "generated_sql": "SELECT\n  fulfillment_channel,\n  SUM(product_gms)    AS total_sales,\n  SUM(shipped_units)  AS total_units\nFROM shipped_raw\nGROUP BY fulfillment_channel\nORDER BY total_sales DESC;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 6.18
+      "latency_seconds": 4.97
     },
     {
       "id": "q20_medium",
@@ -280,133 +280,133 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.55
+      "latency_seconds": 7.11
     },
     {
       "id": "q21_medium",
       "question": "Show me total sales by year and quarter.",
       "complexity": "medium",
       "gold_sql": "SELECT year, quarter, SUM(product_gms) AS total_sales FROM shipped_raw GROUP BY year, quarter ORDER BY year, quarter;",
-      "generated_sql": "SELECT\n  year,\n  ((month - 1) / 3 + 1) AS quarter,\n  SUM(product_gms) AS total_sales_gms,\n  SUM(shipped_units) AS total_shipped_units\nFROM shipped_raw\nGROUP BY\n  year,\n  ((month - 1) / 3 + 1)\nORDER BY\n  year,\n  quarter;",
+      "generated_sql": "SELECT\n  s.year,\n  ((s.month - 1) / 3 + 1) AS quarter,\n  SUM(s.product_gms) AS total_sales\nFROM shipped_raw s\nGROUP BY\n  s.year,\n  ((s.month - 1) / 3 + 1)\nORDER BY\n  s.year,\n  quarter;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 10.72
+      "latency_seconds": 8.99
     },
     {
       "id": "q22_medium",
       "question": "What are the top root causes for returns?",
       "complexity": "medium",
-      "gold_sql": "SELECT root_cause, COUNT(*) AS return_count, SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE root_cause IS NOT NULL GROUP BY root_cause ORDER BY return_count DESC LIMIT 10;",
-      "generated_sql": "SELECT\n  c.root_cause,\n  c.defect_category,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  COUNT(*) AS concession_events\nFROM concession_raw c\nWHERE c.marketplace_id = 4\nGROUP BY\n  c.root_cause,\n  c.defect_category\nORDER BY\n  total_ncrc DESC NULLS LAST,\n  conceded_units DESC NULLS LAST\nLIMIT 20;",
+      "gold_sql": "SELECT root_cause,defect_category, COUNT(*) AS return_count, SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE root_cause IS NOT NULL GROUP BY root_cause,defect_category ORDER BY return_count DESC;",
+      "generated_sql": "SELECT\n  c.root_cause,\n  c.defect_category,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  COUNT(*) AS concession_records\nFROM concession_raw c\nWHERE c.root_cause IS NOT NULL\nGROUP BY\n  c.root_cause,\n  c.defect_category\nORDER BY\n  SUM(c.ncrc) DESC,\n  SUM(c.conceded_units) DESC\nLIMIT 20;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": false,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 10.83
+      "latency_seconds": 9.29
     },
     {
       "id": "q23_medium",
       "question": "Show return counts by defect category.",
       "complexity": "medium",
       "gold_sql": "SELECT defect_category, COUNT(conceded_units) AS return_count FROM concession_raw WHERE defect_category IS NOT NULL GROUP BY defect_category ORDER BY return_count DESC,defect_category ASC;",
-      "generated_sql": "SELECT\n  defect_category,\n  COUNT(*) AS return_records,\n  SUM(conceded_units) AS conceded_units\nFROM concession_raw\nGROUP BY defect_category\nORDER BY conceded_units DESC, return_records DESC;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 10.79
-    },
-    {
-      "id": "q24_medium",
-      "question": "Show recovery channel statistics by volume.",
-      "complexity": "medium",
-      "gold_sql": "SELECT recovery_channel, COUNT(*) AS item_count, SUM(conceded_units) AS total_units FROM concession_raw WHERE recovery_channel IS NOT NULL GROUP BY recovery_channel ORDER BY total_units DESC;",
-      "generated_sql": "SELECT\n  c.recovery_channel,\n  SUM(c.conceded_units) AS conceded_units\nFROM concession_raw c\nGROUP BY c.recovery_channel\nORDER BY conceded_units DESC;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 11.29
-    },
-    {
-      "id": "q25_medium",
-      "question": "What is the return rate for iPhone products?",
-      "complexity": "medium",
-      "gold_sql": "SELECT (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.item_name ILIKE '%iphone%' GROUP BY s.item_name HAVING SUM(s.shipped_units) > 0;",
-      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  COALESCE(SUM(c.conceded_units), 0) AS conceded_units,\n  (COALESCE(SUM(c.conceded_units), 0) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\n AND c.item_name ILIKE '%iPhone%'\nWHERE s.item_name ILIKE '%iPhone%'\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 12.67
-    },
-    {
-      "id": "q26_medium",
-      "question": "Show Google Pixel sales by month.",
-      "complexity": "medium",
-      "gold_sql": "SELECT year, month, SUM(product_gms) AS total_sales FROM shipped_raw WHERE item_name ILIKE '%Google Pixel%' GROUP BY year, month ORDER BY year, month;",
-      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms)  AS product_gms,\n  SUM(s.shipped_cogs) AS shipped_cogs\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%Google Pixel%'\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
+      "generated_sql": "SELECT\n  c.defect_category,\n  COUNT(*) AS return_count,\n  SUM(c.conceded_units) AS conceded_units\nFROM concession_raw c\nGROUP BY\n  c.defect_category\nORDER BY\n  return_count DESC;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 14.13
+      "latency_seconds": 8.55
     },
     {
-      "id": "q27_medium",
-      "question": "Which year has the highest return rate?",
+      "id": "q24_medium",
+      "question": "Show recovery channel statistics by volume.",
       "complexity": "medium",
-      "gold_sql": "SELECT s.year, (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week GROUP BY s.year ORDER BY return_rate_pct DESC NULLS LAST LIMIT 1;",
-      "generated_sql": "WITH sales_by_year AS (\n  SELECT\n    s.year AS sales_year,\n    SUM(s.shipped_units) AS shipped_units\n  FROM shipped_raw s\n  GROUP BY s.year\n),\nreturns_by_sales_year AS (\n  SELECT\n    c.mapped_year AS sales_year,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  GROUP BY c.mapped_year\n)\nSELECT\n  sy.sales_year AS year,\n  COALESCE(ry.conceded_units, 0) AS conceded_units,\n  sy.shipped_units,\n  (COALESCE(ry.conceded_units, 0) * 100.0) / NULLIF(sy.shipped_units, 0) AS return_rate_pct\nFROM sales_by_year sy\nLEFT JOIN returns_by_sales_year ry\n  ON ry.sales_year = sy.sales_year\nORDER BY return_rate_pct DESC NULLS LAST\nLIMIT 1;",
+      "gold_sql": "SELECT recovery_channel, COUNT(*) AS item_count, SUM(conceded_units) AS total_units FROM concession_raw GROUP BY recovery_channel ORDER BY total_units DESC;",
+      "generated_sql": "SELECT\n  c.recovery_channel,\n  SUM(c.conceded_units) AS conceded_units,\n  COUNT(*) AS concession_records,\n  (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(SUM(c.conceded_units)) OVER (), 0) AS pct_of_total_units\nFROM concession_raw c\nGROUP BY\n  c.recovery_channel\nORDER BY\n  conceded_units DESC;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 9.0
+    },
+    {
+      "id": "q25_medium",
+      "question": "What is the return rate for iPhone products?",
+      "complexity": "medium",
+      "gold_sql": "SELECT s.year, s.month, SUM(s.shipped_units) AS total_shipped, SUM(COALESCE(c.conceded_units, 0)) AS total_conceded, (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.item_name ILIKE '%iphone%' GROUP BY s.year, s.month ORDER BY s.year, s.month;",
+      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  COALESCE(SUM(c.conceded_units), 0) AS conceded_units,\n  (COALESCE(SUM(c.conceded_units), 0) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct\nFROM shipped_raw s\nLEFT JOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\nWHERE s.item_name ILIKE '%iphone%'\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": false,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.38
+      "latency_seconds": 13.12
+    },
+    {
+      "id": "q26_medium",
+      "question": "Show Google Pixel sales by month.",
+      "complexity": "medium",
+      "gold_sql": "SELECT year, month, SUM(product_gms) AS total_sales FROM shipped_raw WHERE item_name ILIKE '%pixel%' GROUP BY year, month ORDER BY year, month;",
+      "generated_sql": "SELECT\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms) AS product_gms,\n  SUM(s.shipped_cogs) AS shipped_cogs\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%Google Pixel%'\nGROUP BY\n  s.year,\n  s.month\nORDER BY\n  s.year,\n  s.month;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 17.71
+    },
+    {
+      "id": "q27_medium",
+      "question": "Which year has the highest return rate?",
+      "complexity": "medium",
+      "gold_sql": "WITH s AS (SELECT s.year, SUM(s.shipped_units) AS shipped_units FROM shipped_raw s GROUP BY s.year), c AS (SELECT c.mapped_year AS year, SUM(c.conceded_units) AS conceded_units FROM concession_raw c GROUP BY c.mapped_year) SELECT s.year, (COALESCE(c.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct FROM s LEFT JOIN c ON c.year = s.year ORDER BY return_rate_pct DESC NULLS LAST LIMIT 1;",
+      "generated_sql": "WITH shipped_by_year AS (\n  SELECT\n    s.year,\n    SUM(s.shipped_units) AS shipped_units\n  FROM shipped_raw s\n  GROUP BY s.year\n),\nconceded_by_mapped_year AS (\n  SELECT\n    c.mapped_year AS year,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  GROUP BY c.mapped_year\n)\nSELECT\n  sy.year,\n  (COALESCE(cy.conceded_units, 0) * 100.0) / NULLIF(sy.shipped_units, 0) AS return_rate_pct\nFROM shipped_by_year sy\nLEFT JOIN conceded_by_mapped_year cy\n  ON cy.year = sy.year\nORDER BY return_rate_pct DESC NULLS LAST\nLIMIT 1;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 6.24
     },
     {
       "id": "q28_medium",
       "question": "Which defect category has the highest return and what is the root cause?",
       "complexity": "medium",
       "gold_sql": "SELECT defect_category, root_cause, SUM(conceded_units) AS total_conceded_units FROM concession_raw WHERE defect_category IS NOT NULL AND root_cause IS NOT NULL GROUP BY defect_category, root_cause ORDER BY total_conceded_units DESC LIMIT 1;",
-      "generated_sql": "WITH defect_rootcause AS (\n  SELECT\n    c.defect_category,\n    c.root_cause,\n    SUM(c.conceded_units) AS total_conceded_units,\n    SUM(c.ncrc) AS total_ncrc\n  FROM concession_raw c\n  GROUP BY\n    c.defect_category,\n    c.root_cause\n),\ntop_defect AS (\n  SELECT\n    defect_category,\n    SUM(total_conceded_units) AS defect_conceded_units,\n    SUM(total_ncrc) AS defect_ncrc\n  FROM defect_rootcause\n  GROUP BY defect_category\n  ORDER BY defect_conceded_units DESC\n  LIMIT 1\n)\nSELECT\n  td.defect_category,\n  td.defect_conceded_units,\n  td.defect_ncrc,\n  dr.root_cause,\n  dr.total_conceded_units AS rootcause_conceded_units,\n  dr.total_ncrc AS rootcause_ncrc\nFROM top_defect td\nJOIN defect_rootcause dr\n  ON dr.defect_category = td.defect_category\nORDER BY dr.total_conceded_units DESC, dr.total_ncrc DESC\nLIMIT 1;",
+      "generated_sql": "WITH defect_totals AS (\n    SELECT\n        c.defect_category,\n        SUM(c.conceded_units) AS total_conceded_units\n    FROM concession_raw c\n    GROUP BY 1\n),\ntop_defect AS (\n    SELECT\n        defect_category,\n        total_conceded_units\n    FROM defect_totals\n    ORDER BY total_conceded_units DESC NULLS LAST\n    LIMIT 1\n)\nSELECT\n    c.defect_category,\n    c.root_cause,\n    SUM(c.conceded_units) AS conceded_units,\n    SUM(c.ncrc) AS total_ncrc\nFROM concession_raw c\nJOIN top_defect td\n  ON td.defect_category = c.defect_category\nGROUP BY\n    c.defect_category,\n    c.root_cause\nORDER BY\n    conceded_units DESC NULLS LAST\nLIMIT 1;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 9.44
+      "latency_seconds": 6.74
     },
     {
       "id": "q29_medium",
       "question": "Show total sales and return rate by fulfillment channel.",
       "complexity": "medium",
-      "gold_sql": "SELECT s.fulfillment_channel, SUM(s.product_gms) AS total_sales, (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.fulfillment_channel IS NOT NULL GROUP BY s.fulfillment_channel ORDER BY total_sales DESC;",
-      "generated_sql": "WITH sales AS (\n  SELECT\n    s.fulfillment_channel,\n    SUM(s.shipped_units) AS shipped_units,\n    SUM(s.product_gms)   AS total_sales_gms\n  FROM shipped_raw s\n  GROUP BY 1\n),\nreturns_mapped AS (\n  SELECT\n    s.fulfillment_channel,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  JOIN shipped_raw s\n    ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n   AND c.mapped_year = s.year\n   AND c.mapped_month = s.month\n   AND c.mapped_week = s.week\n  GROUP BY 1\n)\nSELECT\n  sa.fulfillment_channel,\n  sa.total_sales_gms,\n  sa.shipped_units,\n  COALESCE(rm.conceded_units, 0) AS conceded_units,\n  (COALESCE(rm.conceded_units, 0) * 100.0) / NULLIF(sa.shipped_units, 0) AS return_rate_pct\nFROM sales sa\nLEFT JOIN returns_mapped rm\n  ON rm.fulfillment_channel = sa.fulfillment_channel\nORDER BY sa.total_sales_gms DESC;",
+      "gold_sql": "WITH sales AS (SELECT s.fulfillment_channel, SUM(s.product_gms) AS total_sales, SUM(s.shipped_units) AS shipped_units FROM shipped_raw s GROUP BY s.fulfillment_channel), returns_mapped AS (SELECT s.fulfillment_channel, SUM(c.conceded_units) AS conceded_units FROM concession_raw c JOIN shipped_raw s ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT) AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week GROUP BY s.fulfillment_channel) SELECT sa.fulfillment_channel, sa.total_sales, (COALESCE(rm.conceded_units, 0) * 100.0) / NULLIF(sa.shipped_units, 0) AS return_rate_pct FROM sales sa LEFT JOIN returns_mapped rm ON rm.fulfillment_channel = sa.fulfillment_channel ORDER BY sa.total_sales DESC;",
+      "generated_sql": "WITH s AS (\n    SELECT\n        fulfillment_channel,\n        year,\n        month,\n        week,\n        SUM(shipped_units) AS shipped_units,\n        SUM(product_gms)  AS product_gms\n    FROM shipped_raw\n    GROUP BY 1,2,3,4\n),\nc AS (\n    SELECT\n        CAST(asin AS TEXT) AS asin,\n        mapped_year AS year,\n        mapped_month AS month,\n        mapped_week AS week,\n        SUM(conceded_units) AS conceded_units\n    FROM concession_raw\n    GROUP BY 1,2,3,4\n),\ns_by_fc AS (\n    SELECT\n        fulfillment_channel,\n        SUM(shipped_units) AS shipped_units,\n        SUM(product_gms)  AS total_sales\n    FROM shipped_raw\n    GROUP BY 1\n),\nc_by_fc AS (\n    SELECT\n        s.fulfillment_channel,\n        SUM(c.conceded_units) AS conceded_units\n    FROM concession_raw c\n    JOIN shipped_raw s\n      ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n     AND c.mapped_year  = s.year\n     AND c.mapped_month = s.month\n     AND c.mapped_week  = s.week\n    GROUP BY 1\n)\nSELECT\n    sfc.fulfillment_channel,\n    sfc.total_sales,\n    sfc.shipped_units,\n    COALESCE(cfc.conceded_units, 0) AS conceded_units,\n    (COALESCE(cfc.conceded_units, 0) * 100.0) / NULLIF(sfc.shipped_units, 0) AS return_rate_pct\nFROM s_by_fc sfc\nLEFT JOIN c_by_fc cfc\n  ON cfc.fulfillment_channel = sfc.fulfillment_channel\nORDER BY sfc.total_sales DESC;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 11.0
+      "latency_seconds": 10.92
     },
     {
       "id": "q30_medium",
@@ -420,21 +420,21 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 7.49
+      "latency_seconds": 6.27
     },
     {
       "id": "q31_hard",
       "question": "Which 10 products have the highest return rates?",
       "complexity": "hard",
-      "gold_sql": "SELECT s.asin, s.item_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units, (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week GROUP BY s.asin, s.item_name HAVING SUM(s.shipped_units) > 0 ORDER BY return_rate_pct DESC LIMIT 10;",
-      "generated_sql": "WITH sales AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MAX(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nreturns AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.asin,\n  s.item_name,\n  s.shipped_units,\n  COALESCE(r.conceded_units, 0) AS conceded_units,\n  (COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM sales s\nLEFT JOIN returns r\n  ON r.asin = s.asin\nWHERE s.shipped_units > 0\nORDER BY return_rate_pct DESC NULLS LAST, s.shipped_units DESC\nLIMIT 10;",
+      "gold_sql": "WITH shipped AS (SELECT CAST(asin AS TEXT) AS asin, MAX(item_name) AS item_name, SUM(shipped_units) AS shipped_units FROM shipped_raw GROUP BY CAST(asin AS TEXT)), conceded AS (SELECT CAST(asin AS TEXT) AS asin, SUM(conceded_units) AS conceded_units FROM concession_raw GROUP BY CAST(asin AS TEXT)) SELECT s.asin, s.item_name, s.shipped_units, COALESCE(c.conceded_units, 0) AS conceded_units, (COALESCE(c.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct FROM shipped s LEFT JOIN conceded c ON c.asin = s.asin WHERE s.shipped_units > 0 ORDER BY return_rate_pct DESC NULLS LAST, conceded_units DESC LIMIT 10;",
+      "generated_sql": "WITH shipped AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MAX(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nreturned AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.asin,\n  s.item_name,\n  s.shipped_units,\n  COALESCE(r.conceded_units, 0) AS conceded_units,\n  (COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM shipped s\nLEFT JOIN returned r\n  ON r.asin = s.asin\nWHERE s.shipped_units > 0\nORDER BY return_rate_pct DESC NULLS LAST\nLIMIT 10;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": false,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 14.87
+      "latency_seconds": 12.05
     },
     {
       "id": "q32_hard",
@@ -448,70 +448,182 @@
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 11.11
+      "latency_seconds": 10.42
     },
     {
       "id": "q33_hard",
       "question": "Which products have safety issues (andon cord)?",
       "complexity": "hard",
       "gold_sql": "SELECT DISTINCT asin, item_name, brand_name FROM concession_raw WHERE is_andon_cord = 'Y';",
-      "generated_sql": "SELECT\n  CAST(c.asin AS TEXT) AS asin,\n  c.item_name,\n  MAX(c.is_andon_cord) AS is_andon_cord,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  COUNT(*) AS concession_records,\n  MIN(c.year * 100 + c.month) AS first_concession_yyyymm,\n  MAX(c.year * 100 + c.month) AS last_concession_yyyymm\nFROM concession_raw c\nWHERE c.is_andon_cord = 'Y'\n  AND c.item_name ILIKE '%andon cord%'\nGROUP BY\n  CAST(c.asin AS TEXT),\n  c.item_name\nORDER BY\n  total_ncrc DESC;",
+      "generated_sql": "SELECT\n  CAST(c.asin AS TEXT) AS asin,\n  MAX(c.item_name) AS item_name,\n  MAX(c.brand_name) AS brand_name,\n  MAX(c.manufacturer_name) AS manufacturer_name,\n  COUNT(*) AS andon_events,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  MIN(c.year * 100 + c.month) AS first_andon_yyyymm,\n  MAX(c.year * 100 + c.month) AS last_andon_yyyymm\nFROM concession_raw c\nWHERE c.is_andon_cord = 'Y'\nGROUP BY CAST(c.asin AS TEXT)\nORDER BY total_ncrc DESC, andon_events DESC, conceded_units DESC;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 13.02
+      "latency_seconds": 10.89
     },
     {
       "id": "q34_hard",
       "question": "Which brands have the highest NCRC?",
       "complexity": "hard",
-      "gold_sql": "SELECT brand_name, SUM(ncrc) AS total_ncrc, SUM(conceded_units) AS total_conceded FROM concession_raw WHERE brand_name IS NOT NULL GROUP BY brand_name ORDER BY total_ncrc DESC NULLS LAST LIMIT 10;",
-      "generated_sql": "SELECT\n  c.brand_name,\n  SUM(c.ncrc) AS total_ncrc\nFROM concession_raw c\nGROUP BY\n  c.brand_name\nORDER BY\n  total_ncrc DESC NULLS LAST;",
+      "gold_sql": "SELECT brand_name, SUM(ncrc) AS total_ncrc, SUM(conceded_units) AS total_conceded FROM concession_raw WHERE brand_name IS NOT NULL GROUP BY brand_name ORDER BY total_ncrc DESC NULLS LAST;",
+      "generated_sql": "SELECT\n  c.brand_name,\n  SUM(c.ncrc) AS total_ncrc\nFROM concession_raw c\nGROUP BY\n  c.brand_name\nORDER BY\n  total_ncrc DESC;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 8.76
+      "latency_seconds": 6.21
     },
     {
       "id": "q35_hard",
-      "question": "What is net margin by brand (top brands)?",
+      "question": "What is net margin by brand for the top 20 brands? Net margin = total sales (product GMS) minus total shipped COGS minus total NCRC, where GMS and COGS are summed from shipped_raw and NCRC is summed f...",
       "complexity": "hard",
-      "gold_sql": "SELECT s.brand_name, SUM(s.product_gms) - SUM(s.shipped_cogs) - COALESCE(SUM(c.ncrc), 0) AS net_margin, SUM(s.product_gms) AS total_sales FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.brand_name IS NOT NULL GROUP BY s.brand_name ORDER BY net_margin DESC NULLS LAST LIMIT 10;",
-      "generated_sql": "WITH s AS (\n  SELECT\n    brand_name,\n    SUM(product_gms) AS product_gms,\n    SUM(shipped_cogs) AS shipped_cogs,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nc AS (\n  SELECT\n    brand_name,\n    SUM(ncrc) AS ncrc,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.brand_name,\n  (s.product_gms - s.shipped_cogs - COALESCE(c.ncrc, 0)) AS net_margin,\n  s.product_gms,\n  s.shipped_cogs,\n  COALESCE(c.ncrc, 0) AS ncrc,\n  s.shipped_units,\n  COALESCE(c.conceded_units, 0) AS conceded_units,\n  (COALESCE(c.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM s\nLEFT JOIN c\n  ON c.brand_name = s.brand_name\nORDER BY net_margin DESC\nLIMIT 20;",
+      "gold_sql": "WITH s AS (SELECT s.brand_name, SUM(s.product_gms) AS total_sales, SUM(s.shipped_cogs) AS shipped_cogs FROM shipped_raw s WHERE s.brand_name IS NOT NULL GROUP BY s.brand_name), c AS (SELECT c.brand_name, SUM(c.ncrc) AS total_ncrc FROM concession_raw c WHERE c.brand_name IS NOT NULL GROUP BY c.brand_name) SELECT s.brand_name, (s.total_sales - s.shipped_cogs - COALESCE(c.total_ncrc, 0)) AS net_margin, s.total_sales FROM s LEFT JOIN c ON c.brand_name = s.brand_name ORDER BY net_margin DESC NULLS LAST LIMIT 20;",
+      "generated_sql": "WITH sales_by_brand AS (\n  SELECT\n    s.brand_name,\n    SUM(s.product_gms) AS total_gms,\n    SUM(s.shipped_cogs) AS total_shipped_cogs\n  FROM shipped_raw s\n  GROUP BY 1\n),\nreturns_by_brand AS (\n  SELECT\n    c.brand_name,\n    SUM(c.ncrc) AS total_ncrc\n  FROM concession_raw c\n  GROUP BY 1\n),\nnet_margin_by_brand AS (\n  SELECT\n    COALESCE(sb.brand_name, rb.brand_name) AS brand_name,\n    COALESCE(sb.total_gms, 0) AS total_gms,\n    COALESCE(sb.total_shipped_cogs, 0) AS total_shipped_cogs,\n    COALESCE(rb.total_ncrc, 0) AS total_ncrc,\n    COALESCE(sb.total_gms, 0) - COALESCE(sb.total_shipped_cogs, 0) - COALESCE(rb.total_ncrc, 0) AS net_margin\n  FROM sales_by_brand sb\n  FULL OUTER JOIN returns_by_brand rb\n    ON sb.brand_name = rb.brand_name\n)\nSELECT\n  brand_name,\n  total_gms,\n  total_shipped_cogs,\n  total_ncrc,\n  net_margin\nFROM net_margin_by_brand\nORDER BY net_margin DESC\nLIMIT 20;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
-      "match": false,
+      "match": true,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 15.34
+      "latency_seconds": 16.23
     },
     {
       "id": "q36_hard",
       "question": "Show sales and return rate by brand for brands with returns.",
       "complexity": "hard",
-      "gold_sql": "SELECT s.brand_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units, (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.brand_name IS NOT NULL GROUP BY s.brand_name HAVING SUM(s.shipped_units) > 0 ORDER BY return_rate_pct DESC LIMIT 10;",
-      "generated_sql": "WITH s AS (\n  SELECT\n    brand_name,\n    SUM(shipped_units) AS shipped_units,\n    SUM(product_gms)   AS product_gms\n  FROM shipped_raw\n  GROUP BY 1\n),\nc AS (\n  SELECT\n    brand_name,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.brand_name,\n  s.shipped_units,\n  s.product_gms,\n  c.conceded_units,\n  (c.conceded_units * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM s\nJOIN c\n  ON c.brand_name = s.brand_name\nWHERE c.conceded_units > 0\nORDER BY return_rate_pct DESC, c.conceded_units DESC;",
+      "gold_sql": "WITH s AS (SELECT brand_name, SUM(shipped_units) AS shipped_units FROM shipped_raw WHERE brand_name IS NOT NULL GROUP BY brand_name), c AS (SELECT brand_name, SUM(conceded_units) AS conceded_units FROM concession_raw WHERE brand_name IS NOT NULL GROUP BY brand_name) SELECT s.brand_name, s.shipped_units, COALESCE(c.conceded_units, 0) AS conceded_units, (COALESCE(c.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct FROM s JOIN c ON c.brand_name = s.brand_name WHERE COALESCE(c.conceded_units, 0) > 0 ORDER BY return_rate_pct DESC;",
+      "generated_sql": "WITH s AS (\n  SELECT\n    brand_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nc AS (\n  SELECT\n    c.brand_name,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  JOIN shipped_raw s\n    ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n   AND c.mapped_year = s.year\n   AND c.mapped_month = s.month\n   AND c.mapped_week = s.week\n  GROUP BY 1\n)\nSELECT\n  s.brand_name,\n  s.shipped_units,\n  c.conceded_units,\n  (c.conceded_units * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM s\nJOIN c\n  ON c.brand_name = s.brand_name\nWHERE c.conceded_units > 0\nORDER BY return_rate_pct DESC, c.conceded_units DESC, s.shipped_units DESC;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": false,
       "match_skipped_no_gold": false,
       "error_gold": null,
       "error_generated": null,
-      "latency_seconds": 14.57
+      "latency_seconds": 16.09
     },
     {
       "id": "q37_hard",
       "question": "Returns by return window: units and NCRC.",
       "complexity": "hard",
       "gold_sql": "SELECT return_window, SUM(conceded_units) AS total_units, SUM(ncrc) AS total_ncrc FROM concession_raw WHERE return_window IS NOT NULL GROUP BY return_window ORDER BY total_units DESC;",
-      "generated_sql": "SELECT\n  c.return_window,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc\nFROM concession_raw c\nWHERE c.marketplace_id = 4\nGROUP BY\n  c.return_window\nORDER BY\n  conceded_units DESC,\n  total_ncrc DESC;",
+      "generated_sql": "SELECT\n  c.return_window,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc\nFROM concession_raw c\nGROUP BY\n  c.return_window\nORDER BY\n  SUM(c.ncrc) DESC,\n  SUM(c.conceded_units) DESC;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 9.39
+    },
+    {
+      "id": "q38_hard",
+      "question": "From shipment records (shipped_raw), show total sales and shipped units grouped by asp_bucket (average selling price bucket). Do not join to returns.",
+      "complexity": "hard",
+      "gold_sql": "SELECT s.asp_bucket, SUM(s.product_gms) AS total_sales, SUM(s.shipped_units) AS shipped_units FROM shipped_raw s WHERE s.asp_bucket IS NOT NULL GROUP BY s.asp_bucket ORDER BY total_sales DESC;",
+      "generated_sql": "SELECT\n  asp_bucket,\n  SUM(product_gms)   AS total_sales,\n  SUM(shipped_units) AS total_shipped_units\nFROM shipped_raw\nGROUP BY asp_bucket\nORDER BY asp_bucket;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 10.91
+    },
+    {
+      "id": "q39_hard",
+      "question": "Break down returns by high-return-rate ASIN flag (is_hrr_asin).",
+      "complexity": "hard",
+      "gold_sql": "SELECT is_hrr_asin, COUNT(DISTINCT asin) AS product_count, SUM(conceded_units) AS total_conceded FROM concession_raw GROUP BY is_hrr_asin ORDER BY is_hrr_asin NULLS LAST;",
+      "generated_sql": "SELECT\n  c.is_hrr_asin,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  SUM(c.gcv) AS total_gcv,\n  SUM(c.ncv) AS total_ncv,\n  COUNT(*) AS concession_rows\nFROM concession_raw c\nGROUP BY\n  c.is_hrr_asin\nORDER BY\n  total_ncrc DESC;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": false,
+      "match": false,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": "(pg8000.dbapi.ProgrammingError) {'S': 'ERROR', 'V': 'ERROR', 'C': '42703', 'M': 'column c.ncv does not exist', 'H': 'Perhaps you meant to reference the column \"c.gcv\".', 'P': '130', 'F': 'parse_relation.c', 'L': '3656', 'R': 'errorMissingColumn'}\n[SQL: SELECT\n  c.is_hrr_asin,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  SUM(c.gcv) AS total_gcv,\n  SUM(c.ncv) AS total_ncv,\n  COUNT(*) AS concession_rows\nFROM concession_raw c\nGROUP BY\n  c.is_hrr_asin\nORDER BY\n  total_ncrc DESC;]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+      "latency_seconds": 9.79
+    },
+    {
+      "id": "q40_hard",
+      "question": "Show conceded units and NCRC by return month.",
+      "complexity": "hard",
+      "gold_sql": "SELECT year AS return_year, month AS return_month, SUM(conceded_units) AS conceded_units, SUM(ncrc) AS ncrc FROM concession_raw GROUP BY year, month ORDER BY year, month;",
+      "generated_sql": "SELECT\n  c.year AS return_year,\n  c.month AS return_month,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS ncrc\nFROM concession_raw c\nGROUP BY\n  c.year,\n  c.month\nORDER BY\n  return_year,\n  return_month;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 20.83
+    },
+    {
+      "id": "q41_hard",
+      "question": "Which Samsung products have the highest return rates?",
+      "complexity": "hard",
+      "gold_sql": "WITH samsung_ship AS (SELECT CAST(s.asin AS TEXT) AS asin, MAX(s.item_name) AS item_name, SUM(s.shipped_units) AS shipped_units FROM shipped_raw s WHERE (s.brand_name ILIKE '%Samsung%' OR s.item_name ILIKE '%Samsung%') GROUP BY CAST(s.asin AS TEXT)), samsung_conc AS (SELECT CAST(c.asin AS TEXT) AS asin, SUM(c.conceded_units) AS conceded_units FROM concession_raw c JOIN shipped_raw s ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT) AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE (c.brand_name ILIKE '%Samsung%' OR c.item_name ILIKE '%Samsung%') AND (s.brand_name ILIKE '%Samsung%' OR s.item_name ILIKE '%Samsung%') GROUP BY CAST(c.asin AS TEXT)) SELECT ss.asin, ss.item_name, ss.shipped_units, COALESCE(sc.conceded_units, 0) AS conceded_units, (COALESCE(sc.conceded_units, 0) * 100.0) / NULLIF(ss.shipped_units, 0) AS return_rate_pct FROM samsung_ship ss LEFT JOIN samsung_conc sc ON sc.asin = ss.asin WHERE ss.shipped_units > 0 ORDER BY return_rate_pct DESC NULLS LAST, conceded_units DESC, shipped_units DESC LIMIT 50;",
+      "generated_sql": "WITH s AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MAX(item_name) AS item_name,\n    year,\n    month,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  WHERE (brand_name ILIKE '%Samsung%' OR item_name ILIKE '%Samsung%')\n  GROUP BY CAST(asin AS TEXT), year, month\n),\nc AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    mapped_year AS year,\n    mapped_month AS month,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  WHERE (brand_name ILIKE '%Samsung%' OR item_name ILIKE '%Samsung%')\n  GROUP BY CAST(asin AS TEXT), mapped_year, mapped_month\n),\nby_asin AS (\n  SELECT\n    s.asin,\n    MAX(s.item_name) AS item_name,\n    SUM(s.shipped_units) AS shipped_units,\n    SUM(COALESCE(c.conceded_units, 0)) AS conceded_units\n  FROM s\n  LEFT JOIN c\n    ON c.asin = s.asin\n   AND c.year = s.year\n   AND c.month = s.month\n  GROUP BY s.asin\n)\nSELECT\n  asin,\n  item_name,\n  shipped_units,\n  conceded_units,\n  ROUND((conceded_units * 100.0) / NULLIF(shipped_units, 0), 2) AS return_rate_pct\nFROM by_asin\nWHERE shipped_units > 0\nORDER BY return_rate_pct DESC, conceded_units DESC\nLIMIT 50;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": false,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 15.4
+    },
+    {
+      "id": "q42_hard",
+      "question": "What are the top 5 iPhone products by revenue?",
+      "complexity": "hard",
+      "gold_sql": "SELECT asin, item_name, SUM(product_gms) AS total_revenue, SUM(shipped_units) AS units_sold FROM shipped_raw WHERE brand_name ILIKE '%Apple%' GROUP BY asin, item_name ORDER BY total_revenue DESC LIMIT 5;",
+      "generated_sql": "SELECT\n  s.asin,\n  s.item_name,\n  SUM(s.product_gms) AS revenue\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%iphone%'\nGROUP BY\n  s.asin,\n  s.item_name\nORDER BY revenue DESC\nLIMIT 5;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": true,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 9.01
+    },
+    {
+      "id": "q43_hard",
+      "question": "Compare return rate between Google Pixel and iPhone.",
+      "complexity": "hard",
+      "gold_sql": "WITH pixel_ship AS (SELECT SUM(shipped_units) AS shipped_units FROM shipped_raw WHERE item_name ILIKE '%pixel%'), pixel_conc AS (SELECT SUM(conceded_units) AS conceded_units FROM concession_raw WHERE item_name ILIKE '%pixel%'), iphone_ship AS (SELECT SUM(shipped_units) AS shipped_units FROM shipped_raw WHERE item_name ILIKE '%iphone%'), iphone_conc AS (SELECT SUM(conceded_units) AS conceded_units FROM concession_raw WHERE item_name ILIKE '%iphone%') SELECT 'Google Pixel' AS group_name, ps.shipped_units, pc.conceded_units, (pc.conceded_units * 100.0) / NULLIF(ps.shipped_units, 0) AS return_rate_pct FROM pixel_ship ps CROSS JOIN pixel_conc pc UNION ALL SELECT 'iPhone' AS group_name, ish.shipped_units, ic.conceded_units, (ic.conceded_units * 100.0) / NULLIF(ish.shipped_units, 0) AS return_rate_pct FROM iphone_ship ish CROSS JOIN iphone_conc ic;",
+      "generated_sql": "WITH shipped AS (\n  SELECT\n    s.year,\n    s.month,\n    CASE\n      WHEN s.item_name ILIKE '%pixel%' THEN 'Google Pixel'\n      WHEN s.item_name ILIKE '%iphone%' THEN 'iPhone'\n    END AS product_line,\n    SUM(s.shipped_units) AS shipped_units\n  FROM shipped_raw s\n  WHERE s.item_name ILIKE '%pixel%'\n     OR s.item_name ILIKE '%iphone%'\n  GROUP BY 1,2,3\n),\nconceded AS (\n  SELECT\n    c.mapped_year AS year,\n    c.mapped_month AS month,\n    CASE\n      WHEN c.item_name ILIKE '%pixel%' THEN 'Google Pixel'\n      WHEN c.item_name ILIKE '%iphone%' THEN 'iPhone'\n    END AS product_line,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  WHERE c.item_name ILIKE '%pixel%'\n     OR c.item_name ILIKE '%iphone%'\n  GROUP BY 1,2,3\n)\nSELECT\n  s.product_line,\n  s.year,\n  s.month,\n  SUM(s.shipped_units) AS shipped_units,\n  COALESCE(SUM(c.conceded_units), 0) AS conceded_units,\n  (COALESCE(SUM(c.conceded_units), 0) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct\nFROM shipped s\nLEFT JOIN conceded c\n  ON c.product_line = s.product_line\n AND c.year = s.year\n AND c.month = s.month\nGROUP BY 1,2,3\nORDER BY s.year, s.month, s.product_line;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": false,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 15.95
+    },
+    {
+      "id": "q44_hard",
+      "question": "Which is the lowest returned product?",
+      "complexity": "hard",
+      "gold_sql": "WITH ship AS (SELECT CAST(asin AS TEXT) AS asin, MAX(item_name) AS item_name, SUM(shipped_units) AS shipped_units FROM shipped_raw GROUP BY CAST(asin AS TEXT)), conc AS (SELECT CAST(asin AS TEXT) AS asin, SUM(conceded_units) AS conceded_units FROM concession_raw GROUP BY CAST(asin AS TEXT)) SELECT sh.asin, sh.item_name, sh.shipped_units, COALESCE(co.conceded_units, 0) AS conceded_units FROM ship sh LEFT JOIN conc co ON co.asin = sh.asin WHERE sh.shipped_units > 0 ORDER BY COALESCE(co.conceded_units, 0) ASC NULLS LAST LIMIT 1;",
+      "generated_sql": "WITH sales AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MIN(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nreturns AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.asin,\n  s.item_name,\n  s.shipped_units,\n  COALESCE(r.conceded_units, 0) AS conceded_units,\n  (COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM sales s\nLEFT JOIN returns r\n  ON r.asin = s.asin\nWHERE s.shipped_units > 0\nORDER BY\n  COALESCE(r.conceded_units, 0) ASC,\n  ((COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0)) ASC,\n  s.shipped_units DESC\nLIMIT 1;",
+      "execution_ok_gold": true,
+      "execution_ok_generated": true,
+      "match": false,
+      "match_skipped_no_gold": false,
+      "error_gold": null,
+      "error_generated": null,
+      "latency_seconds": 6.94
+    },
+    {
+      "id": "q45_hard",
+      "question": "Compare net margin between Apple and Samsung.",
+      "complexity": "hard",
+      "gold_sql": "WITH apple_ship AS (SELECT SUM(s.product_gms) AS total_sales, SUM(s.shipped_cogs) AS total_cogs FROM shipped_raw s WHERE s.brand_name IS NOT NULL AND s.brand_name ILIKE '%Apple%'), apple_ret AS (SELECT COALESCE(SUM(c.ncrc), 0) AS total_ncrc FROM concession_raw c WHERE c.brand_name IS NOT NULL AND c.brand_name ILIKE '%Apple%'), samsung_ship AS (SELECT SUM(s.product_gms) AS total_sales, SUM(s.shipped_cogs) AS total_cogs FROM shipped_raw s WHERE s.brand_name IS NOT NULL AND s.brand_name ILIKE '%Samsung%'), samsung_ret AS (SELECT COALESCE(SUM(c.ncrc), 0) AS total_ncrc FROM concession_raw c WHERE c.brand_name IS NOT NULL AND c.brand_name ILIKE '%Samsung%') SELECT 'Apple' AS brand_group, sh.total_sales, sh.total_cogs, r.total_ncrc, sh.total_sales - sh.total_cogs - r.total_ncrc AS net_margin FROM apple_ship sh CROSS JOIN apple_ret r UNION ALL SELECT 'Samsung' AS brand_group, sh.total_sales, sh.total_cogs, r.total_ncrc, sh.total_sales - sh.total_cogs - r.total_ncrc AS net_margin FROM samsung_ship sh CROSS JOIN samsung_ret r;",
+      "generated_sql": "WITH s AS (\n  SELECT\n    s.year,\n    s.month,\n    s.brand_name,\n    SUM(s.product_gms)  AS product_gms,\n    SUM(s.shipped_cogs) AS shipped_cogs,\n    SUM(s.shipped_units) AS shipped_units\n  FROM shipped_raw s\n  WHERE s.brand_name IN ('Apple', 'Samsung')\n  GROUP BY 1, 2, 3\n),\nc AS (\n  SELECT\n    c.mapped_year AS year,\n    c.mapped_month AS month,\n    c.brand_name,\n    SUM(c.ncrc) AS ncrc,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  WHERE c.brand_name IN ('Apple', 'Samsung')\n  GROUP BY 1, 2, 3\n)\nSELECT\n  s.year,\n  s.month,\n  s.brand_name,\n  s.product_gms,\n  s.shipped_cogs,\n  COALESCE(c.ncrc, 0) AS ncrc,\n  (s.product_gms - s.shipped_cogs - COALESCE(c.ncrc, 0)) AS net_margin,\n  s.shipped_units,\n  COALESCE(c.conceded_units, 0) AS conceded_units,\n  (COALESCE(c.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM s\nLEFT JOIN c\n  ON c.brand_name = s.brand_name\n AND c.year = s.year\n AND c.month = s.month\nORDER BY s.year, s.month, s.brand_name;",
       "execution_ok_gold": true,
       "execution_ok_generated": true,
       "match": false,
@@ -519,118 +631,6 @@
       "error_gold": null,
       "error_generated": null,
       "latency_seconds": 10.81
-    },
-    {
-      "id": "q38_hard",
-      "question": "Show me sales by average selling price bucket (asp_bucket).",
-      "complexity": "hard",
-      "gold_sql": "SELECT asp_bucket, SUM(product_gms) AS total_sales, SUM(shipped_units) AS units FROM shipped_raw WHERE asp_bucket IS NOT NULL GROUP BY asp_bucket ORDER BY total_sales DESC;",
-      "generated_sql": "SELECT\n  c.asp_bucket,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms) AS product_gms,\n  CASE\n    WHEN SUM(s.shipped_units) = 0 THEN NULL\n    ELSE SUM(s.product_gms) / SUM(s.shipped_units)\n  END AS avg_selling_price\nFROM shipped_raw s\nJOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\nGROUP BY\n  c.asp_bucket\nORDER BY\n  c.asp_bucket;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": false,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": "(pg8000.dbapi.ProgrammingError) {'S': 'ERROR', 'V': 'ERROR', 'C': '42703', 'M': 'column c.asp_bucket does not exist', 'H': 'Perhaps you meant to reference the column \"s.asp_bucket\".', 'P': '10', 'F': 'parse_relation.c', 'L': '3656', 'R': 'errorMissingColumn'}\n[SQL: SELECT\n  c.asp_bucket,\n  SUM(s.shipped_units) AS shipped_units,\n  SUM(s.product_gms) AS product_gms,\n  CASE\n    WHEN SUM(s.shipped_units) = 0 THEN NULL\n    ELSE SUM(s.product_gms) / SUM(s.shipped_units)\n  END AS avg_selling_price\nFROM shipped_raw s\nJOIN concession_raw c\n  ON CAST(c.asin AS TEXT) = CAST(s.asin AS TEXT)\n AND c.mapped_year = s.year\n AND c.mapped_month = s.month\n AND c.mapped_week = s.week\nGROUP BY\n  c.asp_bucket\nORDER BY\n  c.asp_bucket;]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
-      "latency_seconds": 15.48
-    },
-    {
-      "id": "q39_hard",
-      "question": "Break down returns by high-return-rate ASIN flag (is_hrr_asin).",
-      "complexity": "hard",
-      "gold_sql": "SELECT is_hrr_asin, COUNT(DISTINCT asin) AS product_count, SUM(conceded_units) AS total_conceded FROM concession_raw WHERE is_hrr_asin IS NOT NULL GROUP BY is_hrr_asin;",
-      "generated_sql": "SELECT\n  c.is_hrr_asin,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS total_ncrc,\n  COUNT(*) AS concession_records,\n  COUNT(DISTINCT c.asin) AS distinct_asins\nFROM concession_raw c\nGROUP BY\n  c.is_hrr_asin\nORDER BY\n  total_ncrc DESC;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 12.33
-    },
-    {
-      "id": "q40_hard",
-      "question": "Show conceded units and NCRC by return month.",
-      "complexity": "hard",
-      "gold_sql": "SELECT mapped_year, mapped_month, SUM(conceded_units) AS conceded_units, SUM(ncrc) AS total_ncrc FROM concession_raw WHERE mapped_year IS NOT NULL AND mapped_month IS NOT NULL GROUP BY mapped_year, mapped_month ORDER BY mapped_year, mapped_month;",
-      "generated_sql": "SELECT\n  c.year AS return_year,\n  c.month AS return_month,\n  SUM(c.conceded_units) AS conceded_units,\n  SUM(c.ncrc) AS ncrc\nFROM concession_raw c\nGROUP BY\n  c.year,\n  c.month\nORDER BY\n  return_year,\n  return_month;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 21.54
-    },
-    {
-      "id": "q41_hard",
-      "question": "Which Samsung products have the highest return rates?",
-      "complexity": "hard",
-      "gold_sql": "SELECT s.asin, s.item_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units, (SUM(c.conceded_units) * 100.0) / NULLIF(SUM(s.shipped_units), 0) AS return_rate_pct FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.brand_name ILIKE '%Samsung%' GROUP BY s.asin, s.item_name HAVING SUM(s.shipped_units) > 0 ORDER BY return_rate_pct DESC;",
-      "generated_sql": "WITH samsung_sales AS (\n  SELECT\n    CAST(s.asin AS TEXT) AS asin,\n    MAX(s.item_name) AS item_name,\n    s.year,\n    s.month,\n    SUM(s.shipped_units) AS shipped_units\n  FROM shipped_raw s\n  WHERE (s.brand_name ILIKE '%Samsung%' OR s.item_name ILIKE '%Samsung%')\n  GROUP BY CAST(s.asin AS TEXT), s.year, s.month\n),\nsamsung_returns AS (\n  SELECT\n    CAST(c.asin AS TEXT) AS asin,\n    c.mapped_year AS year,\n    c.mapped_month AS month,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  WHERE (c.brand_name ILIKE '%Samsung%' OR c.item_name ILIKE '%Samsung%')\n  GROUP BY CAST(c.asin AS TEXT), c.mapped_year, c.mapped_month\n),\nasin_month AS (\n  SELECT\n    s.asin,\n    s.item_name,\n    s.year,\n    s.month,\n    s.shipped_units,\n    COALESCE(r.conceded_units, 0) AS conceded_units\n  FROM samsung_sales s\n  LEFT JOIN samsung_returns r\n    ON r.asin = s.asin\n   AND r.year = s.year\n   AND r.month = s.month\n),\nasin_rollup AS (\n  SELECT\n    asin,\n    MAX(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units,\n    SUM(conceded_units) AS conceded_units,\n    (SUM(conceded_units) * 100.0) / NULLIF(SUM(shipped_units), 0) AS return_rate_pct\n  FROM asin_month\n  GROUP BY asin\n)\nSELECT\n  asin,\n  item_name,\n  shipped_units,\n  conceded_units,\n  return_rate_pct\nFROM asin_rollup\nWHERE shipped_units > 0\nORDER BY return_rate_pct DESC, conceded_units DESC\nLIMIT 50;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 15.81
-    },
-    {
-      "id": "q42_hard",
-      "question": "What are the top 5 iPhone products by revenue?",
-      "complexity": "hard",
-      "gold_sql": "SELECT asin, item_name, SUM(product_gms) AS total_revenue, SUM(shipped_units) AS units_sold FROM shipped_raw WHERE brand_name ILIKE '%Apple%' GROUP BY asin, item_name ORDER BY total_revenue DESC",
-      "generated_sql": "SELECT\n  s.asin,\n  s.item_name,\n  SUM(s.product_gms) AS revenue\nFROM shipped_raw s\nWHERE s.item_name ILIKE '%iphone%'\nGROUP BY\n  s.asin,\n  s.item_name\nORDER BY revenue DESC\nLIMIT 5;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 10.74
-    },
-    {
-      "id": "q43_hard",
-      "question": "Compare return rate between Google Pixel and iPhone.",
-      "complexity": "hard",
-      "gold_sql": "WITH pixel AS ( SELECT 'Google Pixel' AS group_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.item_name ILIKE '%pixel%'), iphone AS ( SELECT 'iPhone' AS group_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.item_name ILIKE '%iphone%') SELECT group_name, shipped_units, conceded_units, (conceded_units * 100.0) / NULLIF(shipped_units, 0) AS return_rate_pct FROM (SELECT * FROM pixel UNION ALL SELECT * FROM iphone) t;",
-      "generated_sql": "WITH shipped AS (\n  SELECT\n    s.year,\n    s.month,\n    SUM(CASE WHEN s.item_name ILIKE '%Pixel%'  THEN s.shipped_units ELSE 0 END) AS pixel_shipped_units,\n    SUM(CASE WHEN s.item_name ILIKE '%iPhone%' THEN s.shipped_units ELSE 0 END) AS iphone_shipped_units\n  FROM shipped_raw s\n  WHERE s.item_name ILIKE '%Pixel%'\n     OR s.item_name ILIKE '%iPhone%'\n  GROUP BY 1, 2\n),\nconceded AS (\n  SELECT\n    c.mapped_year AS year,\n    c.mapped_month AS month,\n    SUM(CASE WHEN c.item_name ILIKE '%Pixel%'  THEN c.conceded_units ELSE 0 END) AS pixel_conceded_units,\n    SUM(CASE WHEN c.item_name ILIKE '%iPhone%' THEN c.conceded_units ELSE 0 END) AS iphone_conceded_units\n  FROM concession_raw c\n  WHERE c.item_name ILIKE '%Pixel%'\n     OR c.item_name ILIKE '%iPhone%'\n  GROUP BY 1, 2\n)\nSELECT\n  COALESCE(s.year, c.year)  AS mapped_year,\n  COALESCE(s.month, c.month) AS mapped_month,\n\n  s.pixel_shipped_units,\n  c.pixel_conceded_units,\n  (c.pixel_conceded_units * 100.0) / NULLIF(s.pixel_shipped_units, 0) AS pixel_return_rate_pct,\n\n  s.iphone_shipped_units,\n  c.iphone_conceded_units,\n  (c.iphone_conceded_units * 100.0) / NULLIF(s.iphone_shipped_units, 0) AS iphone_return_rate_pct\nFROM shipped s\nFULL OUTER JOIN conceded c\n  ON c.year = s.year\n AND c.month = s.month\nORDER BY 1, 2;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 18.48
-    },
-    {
-      "id": "q44_hard",
-      "question": "Which is the lowest returned product?",
-      "complexity": "hard",
-      "gold_sql": "SELECT s.asin, s.item_name, SUM(s.shipped_units) AS shipped_units, SUM(c.conceded_units) AS conceded_units FROM shipped_raw s JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week GROUP BY s.asin, s.item_name HAVING SUM(s.shipped_units) > 0 ORDER BY SUM(c.conceded_units) ASC NULLS LAST LIMIT 1;",
-      "generated_sql": "WITH sales AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    MIN(item_name) AS item_name,\n    SUM(shipped_units) AS shipped_units\n  FROM shipped_raw\n  GROUP BY 1\n),\nreturns AS (\n  SELECT\n    CAST(asin AS TEXT) AS asin,\n    SUM(conceded_units) AS conceded_units\n  FROM concession_raw\n  GROUP BY 1\n)\nSELECT\n  s.asin,\n  s.item_name,\n  s.shipped_units,\n  COALESCE(r.conceded_units, 0) AS conceded_units,\n  (COALESCE(r.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct\nFROM sales s\nLEFT JOIN returns r\n  ON r.asin = s.asin\nWHERE s.shipped_units > 0\nORDER BY\n  COALESCE(r.conceded_units, 0) ASC,\n  return_rate_pct ASC,\n  s.shipped_units DESC\nLIMIT 1;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 8.12
-    },
-    {
-      "id": "q45_hard",
-      "question": "Compare net margin between Apple and Samsung.",
-      "complexity": "hard",
-      "gold_sql": "WITH apple AS ( SELECT 'Apple' AS brand_group, SUM(s.product_gms) AS total_sales, SUM(s.shipped_cogs) AS total_cogs, COALESCE(SUM(c.ncrc), 0) AS total_ncrc FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.brand_name ILIKE '%Apple%'), samsung AS ( SELECT 'Samsung' AS brand_group, SUM(s.product_gms) AS total_sales, SUM(s.shipped_cogs) AS total_cogs, COALESCE(SUM(c.ncrc), 0) AS total_ncrc FROM shipped_raw s LEFT JOIN concession_raw c ON c.asin = s.asin AND c.mapped_year = s.year AND c.mapped_month = s.month AND c.mapped_week = s.week WHERE s.brand_name ILIKE '%Samsung%') SELECT brand_group, total_sales, total_cogs, total_ncrc, total_sales - total_cogs - total_ncrc AS net_margin FROM (SELECT * FROM apple UNION ALL SELECT * FROM samsung) t;",
-      "generated_sql": "WITH shipped AS (\n  SELECT\n    s.year,\n    s.month,\n    s.brand_name,\n    SUM(s.product_gms)  AS product_gms,\n    SUM(s.shipped_cogs) AS shipped_cogs,\n    SUM(s.shipped_units) AS shipped_units\n  FROM shipped_raw s\n  WHERE s.brand_name ILIKE ANY (ARRAY['%Apple%', '%Samsung%'])\n  GROUP BY 1,2,3\n),\nconcessions AS (\n  SELECT\n    c.mapped_year AS year,\n    c.mapped_month AS month,\n    c.brand_name,\n    SUM(c.ncrc) AS ncrc,\n    SUM(c.conceded_units) AS conceded_units\n  FROM concession_raw c\n  WHERE c.brand_name ILIKE ANY (ARRAY['%Apple%', '%Samsung%'])\n  GROUP BY 1,2,3\n)\nSELECT\n  COALESCE(s.year, c.year)   AS year,\n  COALESCE(s.month, c.month) AS month,\n  COALESCE(s.brand_name, c.brand_name) AS brand_name,\n  COALESCE(s.product_gms, 0)  AS product_gms,\n  COALESCE(s.shipped_cogs, 0) AS shipped_cogs,\n  COALESCE(c.ncrc, 0)         AS ncrc,\n  (COALESCE(s.product_gms, 0) - COALESCE(s.shipped_cogs, 0) - COALESCE(c.ncrc, 0)) AS net_margin\nFROM shipped s\nFULL OUTER JOIN concessions c\n  ON c.year = s.year\n AND c.month = s.month\n AND c.brand_name = s.brand_name\nORDER BY year, month, brand_name;",
-      "execution_ok_gold": true,
-      "execution_ok_generated": true,
-      "match": false,
-      "match_skipped_no_gold": false,
-      "error_gold": null,
-      "error_generated": null,
-      "latency_seconds": 25.95
     }
   ],
   "aggregate": {
@@ -638,26 +638,26 @@
     "with_gold_sql": 45,
     "execution_success_gold": 45,
     "execution_success_generated": 44,
-    "result_match": 18,
+    "result_match": 32,
     "by_complexity": {
       "easy": {
         "total": 15,
         "exec_gen_ok": 15,
-        "match": 9
+        "match": 13
       },
       "medium": {
         "total": 15,
         "exec_gen_ok": 15,
-        "match": 7
+        "match": 11
       },
       "hard": {
         "total": 15,
         "exec_gen_ok": 14,
-        "match": 2
+        "match": 8
       }
     },
     "execution_rate_gold": 1.0,
     "execution_rate_generated": 0.9777777777777777,
-    "match_rate_on_executable_pair": 0.4
+    "match_rate_on_executable_pair": 0.7111111111111111
   }
 }

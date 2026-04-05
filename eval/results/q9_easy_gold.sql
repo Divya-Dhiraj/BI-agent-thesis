@@ -1,1 +1,1 @@
-SELECT SUM(conceded_units) AS total_returned_units FROM concession_raw WHERE mapped_year = 2024;
+SELECT SUM(conceded_units) AS total_returned_units FROM concession_raw WHERE year = 2024;

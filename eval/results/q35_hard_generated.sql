@@ -1,31 +1,35 @@
-WITH s AS (
+WITH sales_by_brand AS (
   SELECT
-    brand_name,
-    SUM(product_gms) AS product_gms,
-    SUM(shipped_cogs) AS shipped_cogs,
-    SUM(shipped_units) AS shipped_units
-  FROM shipped_raw
+    s.brand_name,
+    SUM(s.product_gms) AS total_gms,
+    SUM(s.shipped_cogs) AS total_shipped_cogs
+  FROM shipped_raw s
   GROUP BY 1
 ),
-c AS (
+returns_by_brand AS (
   SELECT
-    brand_name,
-    SUM(ncrc) AS ncrc,
-    SUM(conceded_units) AS conceded_units
-  FROM concession_raw
+    c.brand_name,
+    SUM(c.ncrc) AS total_ncrc
+  FROM concession_raw c
   GROUP BY 1
+),
+net_margin_by_brand AS (
+  SELECT
+    COALESCE(sb.brand_name, rb.brand_name) AS brand_name,
+    COALESCE(sb.total_gms, 0) AS total_gms,
+    COALESCE(sb.total_shipped_cogs, 0) AS total_shipped_cogs,
+    COALESCE(rb.total_ncrc, 0) AS total_ncrc,
+    COALESCE(sb.total_gms, 0) - COALESCE(sb.total_shipped_cogs, 0) - COALESCE(rb.total_ncrc, 0) AS net_margin
+  FROM sales_by_brand sb
+  FULL OUTER JOIN returns_by_brand rb
+    ON sb.brand_name = rb.brand_name
 )
 SELECT
-  s.brand_name,
-  (s.product_gms - s.shipped_cogs - COALESCE(c.ncrc, 0)) AS net_margin,
-  s.product_gms,
-  s.shipped_cogs,
-  COALESCE(c.ncrc, 0) AS ncrc,
-  s.shipped_units,
-  COALESCE(c.conceded_units, 0) AS conceded_units,
-  (COALESCE(c.conceded_units, 0) * 100.0) / NULLIF(s.shipped_units, 0) AS return_rate_pct
-FROM s
-LEFT JOIN c
-  ON c.brand_name = s.brand_name
+  brand_name,
+  total_gms,
+  total_shipped_cogs,
+  total_ncrc,
+  net_margin
+FROM net_margin_by_brand
 ORDER BY net_margin DESC
 LIMIT 20;

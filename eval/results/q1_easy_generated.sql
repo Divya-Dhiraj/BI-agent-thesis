@@ -1,4 +1,3 @@
 SELECT
-  SUM(product_gms) AS total_sales_gms,
-  SUM(shipped_units) AS total_shipped_units
+  SUM(product_gms) AS total_sales
 FROM shipped_raw;

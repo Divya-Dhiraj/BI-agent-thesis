@@ -1,1 +1,1 @@
-asin,item_name,is_andon_cord,conceded_units,total_ncrc,concession_records,first_concession_yyyymm,last_concession_yyyymm
+asin,item_name,brand_name,manufacturer_name,andon_events,conceded_units,total_ncrc,first_andon_yyyymm,last_andon_yyyymm

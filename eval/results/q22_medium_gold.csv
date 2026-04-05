@@ -1,5 +1,29 @@
-root_cause,return_count,total_conceded_units
-Amazon Controllable,273561,186047
-Vendor/Seller Controllable,119538,122591
-Customer Preference,94754,91172
-Fit/Style,5886,5613
+root_cause,defect_category,return_count,total_conceded_units
+Vendor/Seller Controllable,Product Defect,109670,112942
+Customer Preference,No Longer Wanted,64546,58533
+Amazon Controllable,Return Error,63720,39018
+Amazon Controllable,Late Delivery,60268,40932
+Amazon Controllable,Customer Driven,45603,30325
+Customer Preference,No Reason Given,29977,32407
+Amazon Controllable,Damaged,16033,11124
+Amazon Controllable,Delivered Not Received,15892,9223
+Amazon Controllable,Missing Item,15313,9021
+Amazon Controllable,CS Goodwill,13243,8206
+Amazon Controllable,Item Price,10901,17379
+Amazon Controllable,"Not Delivered, Undeliverable",10662,5870
+Amazon Controllable,Wrong Item,10459,7625
+Fit/Style,Fit/Style Issue,5886,5613
+Vendor/Seller Controllable,Missing Parts,4875,4827
+Vendor/Seller Controllable,Bad Detail Page,4644,4589
+Amazon Controllable,Deep Dive,4585,2486
+Amazon Controllable,CS Policy,4039,2624
+Amazon Controllable,Billing Error,1915,1461
+Amazon Controllable,Exception Events,362,254
+Vendor/Seller Controllable,Wrong Item,299,177
+Customer Preference,Product Defect,231,232
+Amazon Controllable,Product Defect,215,172
+Amazon Controllable,Customer Reported Late,206,181
+Amazon Controllable,Seller Issue,91,92
+Vendor/Seller Controllable,Seller Issue,50,56
+Amazon Controllable,Supply Chain,32,31
+Amazon Controllable,Customer Perceived Late,22,23

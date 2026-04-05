@@ -1,21 +1,21 @@
-root_cause,defect_category,conceded_units,total_ncrc,concession_events
-Amazon Controllable,Return Error,39018,28925639.900000144,63720
-Amazon Controllable,Customer Driven,30325,21341814.58999995,45603
-Amazon Controllable,Late Delivery,40932,20532216.829999994,60268
-Vendor/Seller Controllable,Product Defect,112942,14889841.03999997,109670
-Customer Preference,No Longer Wanted,58533,7510867.269999991,64546
-Amazon Controllable,Missing Item,9021,5452228.060000005,15313
-Amazon Controllable,CS Goodwill,8206,4982197.540000003,13243
+root_cause,defect_category,conceded_units,total_ncrc,concession_records
+Amazon Controllable,Return Error,39018,28925639.90000014,63720
+Amazon Controllable,Customer Driven,30325,21341814.589999933,45603
+Amazon Controllable,Late Delivery,40932,20532216.83,60268
+Vendor/Seller Controllable,Product Defect,112942,14889841.039999966,109670
+Customer Preference,No Longer Wanted,58533,7510867.270000003,64546
+Amazon Controllable,Missing Item,9021,5452228.060000004,15313
+Amazon Controllable,CS Goodwill,8206,4982197.540000004,13243
 Amazon Controllable,Delivered Not Received,9223,4880181.980000003,15892
-Amazon Controllable,Damaged,11124,3959432.0100000007,16033
-Amazon Controllable,Wrong Item,7625,3163102.54,10459
-Customer Preference,No Reason Given,32407,2034541.2000000053,29977
-Amazon Controllable,"Not Delivered, Undeliverable",5870,1261125.1599999995,10662
-Amazon Controllable,CS Policy,2624,1203572.9199999997,4039
-Amazon Controllable,Deep Dive,2486,1176171.5299999998,4585
+Amazon Controllable,Damaged,11124,3959432.0099999974,16033
+Amazon Controllable,Wrong Item,7625,3163102.5400000033,10459
+Customer Preference,No Reason Given,32407,2034541.1999999997,29977
+Amazon Controllable,"Not Delivered, Undeliverable",5870,1261125.1599999992,10662
+Amazon Controllable,CS Policy,2624,1203572.9200000004,4039
+Amazon Controllable,Deep Dive,2486,1176171.5300000003,4585
 Fit/Style,Fit/Style Issue,5613,1139204.42,5886
-Amazon Controllable,Item Price,17379,772152.1499999992,10901
-Vendor/Seller Controllable,Missing Parts,4827,598668.7900000005,4875
-Vendor/Seller Controllable,Bad Detail Page,4589,516802.6900000003,4644
-Amazon Controllable,Billing Error,1461,310261.8399999998,1915
-Amazon Controllable,Exception Events,254,100090.96,362
+Amazon Controllable,Item Price,17379,772152.1499999996,10901
+Vendor/Seller Controllable,Missing Parts,4827,598668.790000001,4875
+Vendor/Seller Controllable,Bad Detail Page,4589,516802.6900000002,4644
+Amazon Controllable,Billing Error,1461,310261.83999999985,1915
+Amazon Controllable,Exception Events,254,100090.95999999999,362

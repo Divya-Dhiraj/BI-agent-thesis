@@ -18,6 +18,7 @@ Legacy BIAgentEvaluator-style run (category ground_truth, no gold match files):
 from __future__ import annotations
 
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -47,11 +48,20 @@ COLUMN_ALIASES = {
     "return_rate_pct": ["return_rate_pct", "return_rate", "return_rate_percent"],
     "net_margin": ["net_margin"],
     "distinct_products": ["distinct_products", "count", "high_return_rate_products", "product_count"],
+    # Gold COUNT(DISTINCT ...) often aliases as product_count; models may use descriptive names.
+    "product_count": [
+        "product_count",
+        "distinct_products",
+        "count",
+        "distinct_iphone_asins_shipped",
+        "distinct_asins",
+        "num_distinct_asins",
+    ],
     "total_revenue": ["total_revenue", "revenue", "total_sales_gms"],
     "return_count": ["return_count", "return_records", "concession_records"],
     "item_count": ["item_count", "concession_records", "return_records"],
     "total_units": ["total_units", "conceded_units", "shipped_units", "returned_units"],
-    "total_cogs": ["total_cogs", "shipped_cogs"],
+    "total_cogs": ["total_cogs", "shipped_cogs", "total_cost_of_goods_sold"],
     "avg_selling_price": ["avg_selling_price", "asp", "average_selling_price"],
     "group_name": ["group_name", "product_family", "brand_name"],
 }
@@ -103,6 +113,16 @@ def normalize_for_comparison(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _align_frames_by_shared_keys(gold_n: pd.DataFrame, gen_n: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Sort both frames the same way on columns present in both, so row order matches for grouped results."""
+    common = sorted(set(gold_n.columns) & set(gen_n.columns))
+    if not common:
+        return gold_n, gen_n
+    gold_n = gold_n.sort_values(by=common).reset_index(drop=True)
+    gen_n = gen_n.sort_values(by=common).reset_index(drop=True)
+    return gold_n, gen_n
+
+
 def _series_close(g: pd.Series, p: pd.Series) -> bool:
     g = g.reset_index(drop=True)
     p = p.reset_index(drop=True)
@@ -140,6 +160,11 @@ def _find_matching_gen_column(gold_col: str, gen_columns: List[str]) -> Optional
     for c in gen_columns:
         if gold_lower in c.lower() or c.lower() in gold_lower:
             return c
+    # Gold often aliases CIR as cir_pct_YYYY; models use return_rate_pct / return_rate.
+    if re.fullmatch(r"cir_pct_\d{4}", gold_lower):
+        for name in ("return_rate_pct", "return_rate", "return_rate_percent"):
+            if name in low_map:
+                return low_map[name]
     return None
 
 
@@ -162,6 +187,22 @@ def _single_aggregate_return_rate_match(gold_df: pd.DataFrame, gen_df: pd.DataFr
     return False
 
 
+def _single_scalar_pair_match(gold_df: pd.DataFrame, gen_df: pd.DataFrame) -> bool:
+    """Gold and gen each have one row and one column: compare values, ignore header names."""
+    if (
+        gold_df is None
+        or gen_df is None
+        or len(gold_df) != 1
+        or len(gen_df) != 1
+        or len(gold_df.columns) != 1
+        or len(gen_df.columns) != 1
+    ):
+        return False
+    g = gold_df.iloc[:, 0]
+    p = gen_df.iloc[:, 0]
+    return _series_close(g, p)
+
+
 def dataframes_match(gold_df: pd.DataFrame, gen_df: pd.DataFrame) -> bool:
     if gold_df is None and gen_df is None:
         return True
@@ -174,10 +215,14 @@ def dataframes_match(gold_df: pd.DataFrame, gen_df: pd.DataFrame) -> bool:
 
     gold_n = normalize_for_comparison(gold_df.copy())
     gen_n = normalize_for_comparison(gen_df.copy())
+    gold_n, gen_n = _align_frames_by_shared_keys(gold_n, gen_n)
 
     if len(gold_n) == 1 and len(gold_n.columns) == 1 and len(gen_n) > 1:
         if _single_aggregate_return_rate_match(gold_n, gen_n):
             return True
+
+    if _single_scalar_pair_match(gold_n, gen_n):
+        return True
 
     if len(gold_n) != len(gen_n):
         return False

@@ -1,12 +1,11 @@
 SELECT
-  year,
-  ((month - 1) / 3 + 1) AS quarter,
-  SUM(product_gms) AS total_sales_gms,
-  SUM(shipped_units) AS total_shipped_units
-FROM shipped_raw
+  s.year,
+  ((s.month - 1) / 3 + 1) AS quarter,
+  SUM(s.product_gms) AS total_sales
+FROM shipped_raw s
 GROUP BY
-  year,
-  ((month - 1) / 3 + 1)
+  s.year,
+  ((s.month - 1) / 3 + 1)
 ORDER BY
-  year,
+  s.year,
   quarter;

@@ -1,1 +1,1 @@
-SELECT brand_name, SUM(ncrc) AS total_ncrc, SUM(conceded_units) AS total_conceded FROM concession_raw WHERE brand_name IS NOT NULL GROUP BY brand_name ORDER BY total_ncrc DESC NULLS LAST LIMIT 10;
+SELECT brand_name, SUM(ncrc) AS total_ncrc, SUM(conceded_units) AS total_conceded FROM concession_raw WHERE brand_name IS NOT NULL GROUP BY brand_name ORDER BY total_ncrc DESC NULLS LAST;

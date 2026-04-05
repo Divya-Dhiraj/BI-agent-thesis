@@ -1,1 +1,1 @@
-SELECT COUNT(DISTINCT asin) AS returned_product_count FROM concession_raw;
+SELECT COUNT(DISTINCT asin) AS returned_product_count FROM concession_raw WHERE conceded_units > 0;

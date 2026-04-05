@@ -3,13 +3,13 @@ SELECT
   c.defect_category,
   SUM(c.conceded_units) AS conceded_units,
   SUM(c.ncrc) AS total_ncrc,
-  COUNT(*) AS concession_events
+  COUNT(*) AS concession_records
 FROM concession_raw c
-WHERE c.marketplace_id = 4
+WHERE c.root_cause IS NOT NULL
 GROUP BY
   c.root_cause,
   c.defect_category
 ORDER BY
-  total_ncrc DESC NULLS LAST,
-  conceded_units DESC NULLS LAST
+  SUM(c.ncrc) DESC,
+  SUM(c.conceded_units) DESC
 LIMIT 20;

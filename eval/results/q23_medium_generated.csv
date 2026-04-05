@@ -1,22 +1,22 @@
-defect_category,return_records,conceded_units
+defect_category,return_count,conceded_units
 Product Defect,110116,113346
 No Longer Wanted,64546,58533
-Late Delivery,60268,40932
 Return Error,63720,39018
-No Reason Given,29977,32407
+Late Delivery,60268,40932
 Customer Driven,45603,30325
-Item Price,10901,17379
+No Reason Given,29977,32407
 Damaged,16033,11124
 Delivered Not Received,15892,9223
 Missing Item,15313,9021
 CS Goodwill,13243,8206
+Item Price,10901,17379
 Wrong Item,10758,7802
 "Not Delivered, Undeliverable",10662,5870
 Fit/Style Issue,5886,5613
 Missing Parts,4875,4827
 Bad Detail Page,4644,4589
-CS Policy,4039,2624
 Deep Dive,4585,2486
+CS Policy,4039,2624
 Billing Error,1915,1461
 Exception Events,362,254
 Customer Reported Late,206,181

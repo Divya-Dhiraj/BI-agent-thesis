@@ -1,5 +1,4 @@
 SELECT
-  SUM(s.product_gms) AS total_sales_gms,
-  SUM(s.shipped_units) AS total_shipped_units
+  SUM(s.product_gms) AS total_sales_gms
 FROM shipped_raw s
 WHERE s.brand_name ILIKE '%Sony%';
